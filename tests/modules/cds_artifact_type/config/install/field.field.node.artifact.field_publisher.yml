@@ -1,0 +1,28 @@
+uuid: c78efae4-3251-413b-81f2-6d8e88614a5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_publisher
+    - node.type.artifact
+    - node.type.organization
+id: node.artifact.field_publisher
+field_name: field_publisher
+entity_type: node
+bundle: artifact
+label: Publisher
+description: 'Publisher(s) of this artifact'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organization: organization
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

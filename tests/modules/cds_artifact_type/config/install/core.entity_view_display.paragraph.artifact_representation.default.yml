@@ -1,0 +1,56 @@
+uuid: 8e4a6047-3bda-4437-9efc-28b97b943607
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.artifact_representation.field_exclusions
+    - field.field.paragraph.artifact_representation.field_inclusions
+    - field.field.paragraph.artifact_representation.field_interventions_and_actions
+    - field.field.paragraph.artifact_representation.field_logic_files
+    - field.field.paragraph.artifact_representation.field_triggers
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - file
+    - text
+id: paragraph.artifact_representation.default
+targetEntityType: paragraph
+bundle: artifact_representation
+mode: default
+content:
+  field_exclusions:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_inclusions:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_interventions_and_actions:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_logic_files:
+    weight: 4
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_triggers:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

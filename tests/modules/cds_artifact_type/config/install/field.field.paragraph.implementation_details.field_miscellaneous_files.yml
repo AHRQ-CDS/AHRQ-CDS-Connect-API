@@ -1,0 +1,46 @@
+uuid: d5a3d052-c098-40ea-8258-a290a99dd003
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_miscellaneous_files
+    - paragraphs.paragraphs_type.implementation_details
+  module:
+    - file
+    - filefield_paths
+third_party_settings:
+  filefield_paths:
+    enabled: true
+    file_path:
+      value: 'cds/artifact/[paragraph:parent_id]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+    redirect: false
+    retroactive_update: false
+    active_updating: false
+    file_name:
+      value: '[file:ffp-name-only-original].[file:ffp-extension-original]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+id: paragraph.implementation_details.field_miscellaneous_files
+field_name: field_miscellaneous_files
+entity_type: paragraph
+bundle: implementation_details
+label: 'Miscellaneous Files'
+description: 'Miscellaneous files associated with an artifact (e.g. images, PowerPoint presentations)'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt jpg jpeg doc docx ppt pptx pdf xls xlsx'
+  max_filesize: '20 MB'
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

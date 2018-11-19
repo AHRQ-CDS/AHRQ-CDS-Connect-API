@@ -1,0 +1,9 @@
+uuid: 711bfa0a-52b7-4fd7-9180-50cf3624fd52
+langcode: en
+status: true
+dependencies: {  }
+name: 'Clinical Domain'
+vid: clinical_domain
+description: 'Clinical domains in which an artifact applies'
+hierarchy: 0
+weight: 0

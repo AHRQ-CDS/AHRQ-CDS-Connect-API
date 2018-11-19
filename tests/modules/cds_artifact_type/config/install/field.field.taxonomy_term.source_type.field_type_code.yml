@@ -1,0 +1,21 @@
+uuid: e0fbaad5-5deb-4b37-a719-972b04ce4313
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_type_code
+    - taxonomy.vocabulary.source_type
+id: taxonomy_term.source_type.field_type_code
+field_name: field_type_code
+entity_type: taxonomy_term
+bundle: source_type
+label: 'Type Code'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: fa-list-ul
+default_value_callback: ''
+settings: {  }
+field_type: string

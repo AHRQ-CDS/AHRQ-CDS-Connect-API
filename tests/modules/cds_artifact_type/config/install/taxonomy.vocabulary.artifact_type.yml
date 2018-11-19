@@ -1,0 +1,9 @@
+uuid: a0843519-f616-42c9-9673-2b01c578b5f7
+langcode: en
+status: true
+dependencies: {  }
+name: 'Artifact Type'
+vid: artifact_type
+description: 'The type of a CDS artifact'
+hierarchy: 0
+weight: 0

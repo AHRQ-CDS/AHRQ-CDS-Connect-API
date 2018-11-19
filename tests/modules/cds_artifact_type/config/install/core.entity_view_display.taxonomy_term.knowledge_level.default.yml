@@ -1,0 +1,22 @@
+uuid: 29f86984-e64c-4452-98e7-5a370d2aa08a
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.knowledge_level
+  module:
+    - text
+third_party_settings: {  }
+id: taxonomy_term.knowledge_level.default
+targetEntityType: taxonomy_term
+bundle: knowledge_level
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

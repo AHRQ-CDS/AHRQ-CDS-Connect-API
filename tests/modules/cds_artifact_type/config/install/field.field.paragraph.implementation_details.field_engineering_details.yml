@@ -1,0 +1,21 @@
+uuid: 1546ad25-6502-49b5-84ed-b978dc4cde92
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_engineering_details
+    - paragraphs.paragraphs_type.implementation_details
+  module:
+    - text
+id: paragraph.implementation_details.field_engineering_details
+field_name: field_engineering_details
+entity_type: paragraph
+bundle: implementation_details
+label: 'Engineering Details'
+description: 'Any technical details an engineer may want to know.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

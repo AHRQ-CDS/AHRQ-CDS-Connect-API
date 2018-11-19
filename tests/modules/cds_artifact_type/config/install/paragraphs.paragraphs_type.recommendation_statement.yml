@@ -1,0 +1,9 @@
+uuid: 55f7e4a5-7e12-4925-9c34-ce382fc8ccc3
+langcode: en
+status: true
+dependencies: {  }
+id: recommendation_statement
+label: 'Recommendation Statement'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

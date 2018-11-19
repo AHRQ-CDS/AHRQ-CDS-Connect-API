@@ -1,0 +1,48 @@
+uuid: 898475ea-0701-43a8-9849-4b109005a40f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_supporting_evidence
+    - node.type.artifact
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - entity_reference_revisions
+id: node.artifact.field_supporting_evidence
+field_name: field_supporting_evidence
+entity_type: node
+bundle: artifact
+label: 'Supporting Evidence'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      supporting_evidence: supporting_evidence
+    target_bundles_drag_drop:
+      artifact_representation:
+        weight: 8
+        enabled: false
+      implementation_details:
+        weight: 9
+        enabled: false
+      purpose_and_usage:
+        weight: 10
+        enabled: false
+      recommendation_statement:
+        weight: 11
+        enabled: false
+      repository_information:
+        weight: 12
+        enabled: false
+      supporting_evidence:
+        enabled: true
+        weight: 13
+      testing_experience:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

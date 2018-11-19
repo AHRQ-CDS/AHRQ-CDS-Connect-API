@@ -1,0 +1,18 @@
+uuid: 34b0bc40-eb2a-42bc-a078-838dff0524f9
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Artifact
+type: artifact
+description: 'Clinical Decision Support Artifact'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

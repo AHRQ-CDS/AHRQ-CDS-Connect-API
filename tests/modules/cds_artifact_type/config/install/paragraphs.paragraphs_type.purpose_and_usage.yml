@@ -1,0 +1,9 @@
+uuid: 2cffc5d1-e758-4b37-acb9-84a0ae423967
+langcode: en
+status: true
+dependencies: {  }
+id: purpose_and_usage
+label: 'Purpose and Usage'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

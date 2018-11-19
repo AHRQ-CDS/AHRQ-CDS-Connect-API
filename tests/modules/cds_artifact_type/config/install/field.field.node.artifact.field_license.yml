@@ -1,0 +1,32 @@
+uuid: 74e5705e-ce97-463f-8b31-5fc408b1699c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_license
+    - node.type.artifact
+    - taxonomy.vocabulary.license
+  content:
+    - 'taxonomy_term:license:2b40ce67-0266-48b9-afee-f84922d0cbc7'
+id: node.artifact.field_license
+field_name: field_license
+entity_type: node
+bundle: artifact
+label: License
+description: 'The license governing the artifact’s usage.'
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: 2b40ce67-0266-48b9-afee-f84922d0cbc7
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      license: license
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

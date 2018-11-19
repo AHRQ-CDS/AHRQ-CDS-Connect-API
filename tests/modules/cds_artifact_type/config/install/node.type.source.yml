@@ -1,0 +1,18 @@
+uuid: 8044acfb-a546-4e26-a372-04e8d78d004c
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Source
+type: source
+description: 'Information about source, guidelines, rules, guidance or other original material used to develop CDS Artifacts.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

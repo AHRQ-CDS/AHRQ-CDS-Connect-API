@@ -1,0 +1,41 @@
+uuid: ac16b280-7ba1-4a41-a854-6508b3c505b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.implementation_details.field_engineering_details
+    - field.field.paragraph.implementation_details.field_miscellaneous_files
+    - field.field.paragraph.implementation_details.field_technical_files
+    - paragraphs.paragraphs_type.implementation_details
+  module:
+    - file
+    - text
+id: paragraph.implementation_details.default
+targetEntityType: paragraph
+bundle: implementation_details
+mode: default
+content:
+  field_engineering_details:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_miscellaneous_files:
+    weight: 2
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_technical_files:
+    weight: 1
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+hidden: {  }

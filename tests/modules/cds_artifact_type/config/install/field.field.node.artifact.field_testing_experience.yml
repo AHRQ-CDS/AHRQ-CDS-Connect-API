@@ -1,0 +1,48 @@
+uuid: a5206478-5e50-4608-a428-9b27e0f72c29
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_testing_experience
+    - node.type.artifact
+    - paragraphs.paragraphs_type.testing_experience
+  module:
+    - entity_reference_revisions
+id: node.artifact.field_testing_experience
+field_name: field_testing_experience
+entity_type: node
+bundle: artifact
+label: 'Testing Experience'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      testing_experience: testing_experience
+    target_bundles_drag_drop:
+      artifact_representation:
+        weight: 8
+        enabled: false
+      implementation_details:
+        weight: 9
+        enabled: false
+      purpose_and_usage:
+        weight: 10
+        enabled: false
+      recommendation_statement:
+        weight: 11
+        enabled: false
+      repository_information:
+        weight: 12
+        enabled: false
+      supporting_evidence:
+        weight: 13
+        enabled: false
+      testing_experience:
+        enabled: true
+        weight: 14
+field_type: entity_reference_revisions

@@ -1,0 +1,22 @@
+uuid: 6105a0d1-c076-401f-afa9-7615d11f55e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.testing_experience.field_pilot_experience
+    - paragraphs.paragraphs_type.testing_experience
+  module:
+    - text
+id: paragraph.testing_experience.default
+targetEntityType: paragraph
+bundle: testing_experience
+mode: default
+content:
+  field_pilot_experience:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

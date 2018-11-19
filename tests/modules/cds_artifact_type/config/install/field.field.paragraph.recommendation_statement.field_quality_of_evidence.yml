@@ -1,0 +1,21 @@
+uuid: 479209fe-e97f-4f90-b022-4b9db3c670c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_quality_of_evidence
+    - paragraphs.paragraphs_type.recommendation_statement
+  module:
+    - text
+id: paragraph.recommendation_statement.field_quality_of_evidence
+field_name: field_quality_of_evidence
+entity_type: paragraph
+bundle: recommendation_statement
+label: 'Quality of Evidence'
+description: 'The grade associated with the body of evidence supporting the recommendation, if available.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

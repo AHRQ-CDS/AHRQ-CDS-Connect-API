@@ -1,0 +1,21 @@
+uuid: 3d749437-0e3e-4c9a-878e-0d34ba5acca0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cautions
+    - paragraphs.paragraphs_type.purpose_and_usage
+  module:
+    - text
+id: paragraph.purpose_and_usage.field_cautions
+field_name: field_cautions
+entity_type: paragraph
+bundle: purpose_and_usage
+label: Cautions
+description: 'Any cautions or warnings to be considered regarding the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

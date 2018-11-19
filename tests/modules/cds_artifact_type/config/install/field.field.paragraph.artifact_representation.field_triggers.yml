@@ -1,0 +1,21 @@
+uuid: 3d28c020-e299-470f-8b26-31ff91c5c2ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_triggers
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - text
+id: paragraph.artifact_representation.field_triggers
+field_name: field_triggers
+entity_type: paragraph
+bundle: artifact_representation
+label: Triggers
+description: 'Triggers that should activate the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

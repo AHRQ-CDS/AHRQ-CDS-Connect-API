@@ -1,0 +1,21 @@
+uuid: d0d0698e-e73b-43cf-bb54-836b03fcfafe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_type_code
+    - taxonomy.vocabulary.artifact_type
+id: taxonomy_term.artifact_type.field_type_code
+field_name: field_type_code
+entity_type: taxonomy_term
+bundle: artifact_type
+label: 'Type Code'
+description: 'Code used to identify icons associated with the Artifact Type'
+required: false
+translatable: false
+default_value:
+  -
+    value: fa-file-text-o
+default_value_callback: ''
+settings: {  }
+field_type: string

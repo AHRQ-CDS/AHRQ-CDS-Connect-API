@@ -1,0 +1,21 @@
+uuid: af85027a-42d6-426b-939e-27f8bf1d3d4e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_strength_of_recommendation
+    - paragraphs.paragraphs_type.recommendation_statement
+  module:
+    - text
+id: paragraph.recommendation_statement.field_strength_of_recommendation
+field_name: field_strength_of_recommendation
+entity_type: paragraph
+bundle: recommendation_statement
+label: 'Strength of Recommendation'
+description: 'The grade and system used to grade the strength of the recommendation, if available.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -1,0 +1,46 @@
+uuid: ca24c4e8-afd7-4bc0-9907-19b3f704bc1f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_test_patients
+    - paragraphs.paragraphs_type.purpose_and_usage
+  module:
+    - file
+    - filefield_paths
+third_party_settings:
+  filefield_paths:
+    enabled: true
+    file_path:
+      value: 'cds/artifact/[paragraph:parent_id]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+    redirect: false
+    retroactive_update: false
+    active_updating: false
+    file_name:
+      value: '[file:ffp-name-only-original].[file:ffp-extension-original]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+id: paragraph.purpose_and_usage.field_test_patients
+field_name: field_test_patients
+entity_type: paragraph
+bundle: purpose_and_usage
+label: 'Test Patients'
+description: 'Sample test (artificial) patients which demonstrate features of the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt csv xls xlsx json xml zip'
+  max_filesize: '5 mb'
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

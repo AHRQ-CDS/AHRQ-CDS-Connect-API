@@ -1,0 +1,28 @@
+uuid: 15add5a2-c34b-4ab7-a0b0-9d3dec2c46b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_knowledge_level
+    - node.type.artifact
+    - taxonomy.vocabulary.knowledge_level
+id: node.artifact.field_knowledge_level
+field_name: field_knowledge_level
+entity_type: node
+bundle: artifact
+label: 'Knowledge Level'
+description: 'Knowledge Level (1 to 4) by Boxwala et al.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      knowledge_level: knowledge_level
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

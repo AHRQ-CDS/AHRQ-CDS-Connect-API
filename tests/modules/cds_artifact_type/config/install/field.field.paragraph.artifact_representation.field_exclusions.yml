@@ -1,0 +1,21 @@
+uuid: 5a579de8-1769-4f96-99bd-e5049e2f4d86
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_exclusions
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - text
+id: paragraph.artifact_representation.field_exclusions
+field_name: field_exclusions
+entity_type: paragraph
+bundle: artifact_representation
+label: Exclusions
+description: 'Exclusion criteria for individuals to be excluded or exempt from the recommendation.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

@@ -1,0 +1,24 @@
+uuid: 10bf8791-48a6-49ce-9c5e-87c0a38b41d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.source_type.field_type_code
+    - taxonomy.vocabulary.source_type
+  module:
+    - text
+third_party_settings: {  }
+id: taxonomy_term.source_type.default
+targetEntityType: taxonomy_term
+bundle: source_type
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_type_code: true

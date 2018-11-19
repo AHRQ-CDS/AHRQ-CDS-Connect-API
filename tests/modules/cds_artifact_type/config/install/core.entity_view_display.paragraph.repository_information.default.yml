@@ -1,0 +1,66 @@
+uuid: c0bb0b85-03c2-44b8-931e-9170929bba1e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.repository_information.field_approval_date
+    - field.field.paragraph.repository_information.field_expiration_date
+    - field.field.paragraph.repository_information.field_last_review_date
+    - field.field.paragraph.repository_information.field_preview_image
+    - field.field.paragraph.repository_information.field_publication_date
+    - paragraphs.paragraphs_type.repository_information
+  module:
+    - datetime
+    - field_formatter_class
+    - image
+id: paragraph.repository_information.default
+targetEntityType: paragraph
+bundle: repository_information
+mode: default
+content:
+  field_approval_date:
+    weight: 0
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: html_date
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_expiration_date:
+    weight: 3
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: html_date
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_last_review_date:
+    weight: 2
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: html_date
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_preview_image:
+    weight: 4
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_publication_date:
+    weight: 1
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: html_date
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+hidden: {  }

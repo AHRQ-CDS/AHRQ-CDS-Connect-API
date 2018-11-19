@@ -1,0 +1,46 @@
+uuid: 2cc297cb-cc54-4d8b-a29f-d1b9c38b8ce2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_technical_files
+    - paragraphs.paragraphs_type.implementation_details
+  module:
+    - file
+    - filefield_paths
+third_party_settings:
+  filefield_paths:
+    enabled: true
+    file_path:
+      value: 'cds/artifact/[paragraph:parent_id]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+    redirect: false
+    retroactive_update: false
+    active_updating: false
+    file_name:
+      value: '[file:ffp-name-only-original].[file:ffp-extension-original]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+id: paragraph.implementation_details.field_technical_files
+field_name: field_technical_files
+entity_type: paragraph
+bundle: implementation_details
+label: 'Technical Files'
+description: 'Technical files which may assist in implementation (code samples, etc.)'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt doc docx'
+  max_filesize: '20 MB'
+  description_field: true
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

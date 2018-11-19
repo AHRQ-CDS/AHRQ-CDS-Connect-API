@@ -1,0 +1,21 @@
+uuid: 3804c98b-21be-4ffb-99a6-80fafef1a095
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_contributors
+    - node.type.artifact
+  module:
+    - text
+id: node.artifact.field_contributors
+field_name: field_contributors
+entity_type: node
+bundle: artifact
+label: Contributors
+description: 'Individuals or groups who have contributed to the definition of the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

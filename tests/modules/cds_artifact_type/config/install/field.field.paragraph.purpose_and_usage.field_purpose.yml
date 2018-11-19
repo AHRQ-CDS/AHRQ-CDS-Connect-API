@@ -1,0 +1,21 @@
+uuid: ee5fe29f-2d25-4fd5-884e-9a032a8821f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_purpose
+    - paragraphs.paragraphs_type.purpose_and_usage
+  module:
+    - text
+id: paragraph.purpose_and_usage.field_purpose
+field_name: field_purpose
+entity_type: paragraph
+bundle: purpose_and_usage
+label: Purpose
+description: 'The purpose of the artifact, described in plain language.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

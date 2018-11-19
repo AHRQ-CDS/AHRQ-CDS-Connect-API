@@ -1,0 +1,21 @@
+uuid: 7d5427e2-ea28-4dd9-a28d-9964544a9a31
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_intended_population
+    - paragraphs.paragraphs_type.purpose_and_usage
+  module:
+    - text
+id: paragraph.purpose_and_usage.field_intended_population
+field_name: field_intended_population
+entity_type: paragraph
+bundle: purpose_and_usage
+label: 'Intended Population'
+description: 'The group of patients for which the artifact is relevant (e.g., age, gender)'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

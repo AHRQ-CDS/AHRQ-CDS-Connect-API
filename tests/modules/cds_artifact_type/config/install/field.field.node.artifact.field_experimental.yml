@@ -1,0 +1,23 @@
+uuid: e6b6581c-1f3d-4fcd-ad78-413171e2b452
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_experimental
+    - node.type.artifact
+id: node.artifact.field_experimental
+field_name: field_experimental
+entity_type: node
+bundle: artifact
+label: Experimental
+description: 'Indicates this artifact is for testing, evaluation, educational or demonstration purposes and not intended for clinical use'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'True'
+  off_label: 'False'
+field_type: boolean

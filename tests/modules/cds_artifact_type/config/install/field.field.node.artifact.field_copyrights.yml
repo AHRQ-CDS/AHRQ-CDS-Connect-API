@@ -1,0 +1,21 @@
+uuid: 870a8585-e2ce-43c6-9e69-23e97fcc9893
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_copyrights
+    - node.type.artifact
+  module:
+    - text
+id: node.artifact.field_copyrights
+field_name: field_copyrights
+entity_type: node
+bundle: artifact
+label: Copyrights
+description: 'Specific copyright statements associated with the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

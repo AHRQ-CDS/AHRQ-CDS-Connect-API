@@ -1,0 +1,29 @@
+uuid: c68ffc15-d748-4909-a504-079088c4d118
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_authors
+    - node.type.organization
+    - node.type.source
+id: node.source.field_authors
+field_name: field_authors
+entity_type: node
+bundle: source
+label: Authors
+description: 'Select the organization(s) that are considered as the authors of the source material. '
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organization: organization
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

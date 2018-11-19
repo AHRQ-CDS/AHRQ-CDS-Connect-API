@@ -1,0 +1,10 @@
+name: CDS API
+description: A RESTful API for interacting with Clinical Decision Support (CDS) artifacts.
+package: Custom
+type: module
+core: 8.x
+
+dependencies:
+  - drupal:rest
+  - drupal:paragraphs
+  - drupal:taxonomy

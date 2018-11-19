@@ -1,0 +1,20 @@
+uuid: de3193b6-fbe6-47da-ae1e-9c3f75393635
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_artifact_type
+field_name: field_artifact_type
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

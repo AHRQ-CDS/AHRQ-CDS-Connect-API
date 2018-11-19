@@ -1,0 +1,68 @@
+uuid: 8c8198de-1efa-4a73-8f52-de10b21e0d8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.artifact_representation.field_exclusions
+    - field.field.paragraph.artifact_representation.field_inclusions
+    - field.field.paragraph.artifact_representation.field_interventions_and_actions
+    - field.field.paragraph.artifact_representation.field_logic_files
+    - field.field.paragraph.artifact_representation.field_triggers
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - file
+    - text
+id: paragraph.artifact_representation.default
+targetEntityType: paragraph
+bundle: artifact_representation
+mode: default
+content:
+  field_exclusions:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_inclusions:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_interventions_and_actions:
+    weight: 9
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_logic_files:
+    weight: 10
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_triggers:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

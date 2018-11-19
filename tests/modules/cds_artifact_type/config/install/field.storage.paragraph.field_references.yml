@@ -1,0 +1,19 @@
+uuid: 32bf03ce-69b3-4d12-a2a5-a66f96b189ce
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_references
+field_name: field_references
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

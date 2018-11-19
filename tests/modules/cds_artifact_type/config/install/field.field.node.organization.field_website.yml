@@ -1,0 +1,23 @@
+uuid: cac29541-f7d8-43ac-a259-2aaae87a3fd6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_website
+    - node.type.organization
+  module:
+    - link
+id: node.organization.field_website
+field_name: field_website
+entity_type: node
+bundle: organization
+label: Website
+description: 'Homepage URL for the Organization'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

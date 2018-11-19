@@ -1,0 +1,46 @@
+uuid: 9682e05e-6915-4fb7-91b8-b67ddd6cf328
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_logic_files
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - file
+    - filefield_paths
+third_party_settings:
+  filefield_paths:
+    enabled: true
+    file_path:
+      value: 'cds/artifact/logic/[date:custom:Y]-[date:custom:m]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+    redirect: false
+    retroactive_update: false
+    active_updating: false
+    file_name:
+      value: '[file:ffp-name-only-original].[file:ffp-extension-original]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+id: paragraph.artifact_representation.field_logic_files
+field_name: field_logic_files
+entity_type: paragraph
+bundle: artifact_representation
+label: 'Logic Files'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt html cql json zip'
+  max_filesize: '20 MB'
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

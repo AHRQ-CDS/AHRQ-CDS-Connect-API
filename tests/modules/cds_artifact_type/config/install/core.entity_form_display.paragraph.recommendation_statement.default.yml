@@ -1,0 +1,59 @@
+uuid: a07588a4-2fcb-4351-b42a-b3d3c7e3af25
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.recommendation_statement.field_decision_notes
+    - field.field.paragraph.recommendation_statement.field_quality_of_evidence
+    - field.field.paragraph.recommendation_statement.field_recommendation
+    - field.field.paragraph.recommendation_statement.field_strength_of_recommendation
+    - paragraphs.paragraphs_type.recommendation_statement
+  module:
+    - text
+id: paragraph.recommendation_statement.default
+targetEntityType: paragraph
+bundle: recommendation_statement
+mode: default
+content:
+  field_decision_notes:
+    weight: 9
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_quality_of_evidence:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_recommendation:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_strength_of_recommendation:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

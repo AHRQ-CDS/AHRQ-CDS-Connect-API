@@ -1,0 +1,21 @@
+uuid: b34212e5-9cec-41da-9eae-4af885726eb2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_inclusions
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - text
+id: paragraph.artifact_representation.field_inclusions
+field_name: field_inclusions
+entity_type: paragraph
+bundle: artifact_representation
+label: Inclusions
+description: 'Criteria to ensure interventions are applied to only appropriate scenarios evaluated in the patient record'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

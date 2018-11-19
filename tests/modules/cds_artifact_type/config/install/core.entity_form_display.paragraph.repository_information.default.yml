@@ -1,0 +1,63 @@
+uuid: dd30e3d8-a4dd-4959-b5fa-407d0d2d7aad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.repository_information.field_approval_date
+    - field.field.paragraph.repository_information.field_expiration_date
+    - field.field.paragraph.repository_information.field_last_review_date
+    - field.field.paragraph.repository_information.field_preview_image
+    - field.field.paragraph.repository_information.field_publication_date
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.repository_information
+  module:
+    - content_moderation
+    - datetime
+    - image
+id: paragraph.repository_information.default
+targetEntityType: paragraph
+bundle: repository_information
+mode: default
+content:
+  field_approval_date:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_expiration_date:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_last_review_date:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_preview_image:
+    weight: 101
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_publication_date:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

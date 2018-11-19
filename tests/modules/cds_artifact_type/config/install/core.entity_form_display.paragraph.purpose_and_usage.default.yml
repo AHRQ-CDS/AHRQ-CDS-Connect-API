@@ -1,0 +1,68 @@
+uuid: 54e0b5de-a75d-45f1-9ccb-2a000ef61723
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.purpose_and_usage.field_cautions
+    - field.field.paragraph.purpose_and_usage.field_intended_population
+    - field.field.paragraph.purpose_and_usage.field_purpose
+    - field.field.paragraph.purpose_and_usage.field_test_patients
+    - field.field.paragraph.purpose_and_usage.field_usage
+    - paragraphs.paragraphs_type.purpose_and_usage
+  module:
+    - file
+    - text
+id: paragraph.purpose_and_usage.default
+targetEntityType: paragraph
+bundle: purpose_and_usage
+mode: default
+content:
+  field_cautions:
+    weight: 9
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_intended_population:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_purpose:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_test_patients:
+    weight: 10
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_usage:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

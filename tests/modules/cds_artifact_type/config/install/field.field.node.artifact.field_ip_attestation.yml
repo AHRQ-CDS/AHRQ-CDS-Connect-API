@@ -1,0 +1,23 @@
+uuid: 540776da-d6d4-4a8c-afb5-2ea56bdb9061
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ip_attestation
+    - node.type.artifact
+id: node.artifact.field_ip_attestation
+field_name: field_ip_attestation
+entity_type: node
+bundle: artifact
+label: 'IP Attestation'
+description: 'By checking this box, the author asserts that this artifact has been developed in compliance with the intellectual property rights attributed to the source material. '
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

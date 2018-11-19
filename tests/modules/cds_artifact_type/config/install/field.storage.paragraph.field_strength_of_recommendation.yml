@@ -1,0 +1,19 @@
+uuid: 1b30c22e-0470-4bd9-a817-d3dc10adcfe1
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_strength_of_recommendation
+field_name: field_strength_of_recommendation
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

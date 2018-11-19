@@ -1,0 +1,21 @@
+uuid: f5b78960-9604-4f6b-80b5-4be9c2d818e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_references
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - text
+id: paragraph.supporting_evidence.field_references
+field_name: field_references
+entity_type: paragraph
+bundle: supporting_evidence
+label: References
+description: 'Citations or references to guidelines, evidence, or other materials'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

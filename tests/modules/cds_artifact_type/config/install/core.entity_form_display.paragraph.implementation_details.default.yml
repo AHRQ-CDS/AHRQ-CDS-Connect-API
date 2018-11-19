@@ -1,0 +1,49 @@
+uuid: 31c4cf9d-250b-4bb8-8376-d044726e919f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.implementation_details.field_engineering_details
+    - field.field.paragraph.implementation_details.field_miscellaneous_files
+    - field.field.paragraph.implementation_details.field_technical_files
+    - paragraphs.paragraphs_type.implementation_details
+  module:
+    - file
+    - text
+id: paragraph.implementation_details.default
+targetEntityType: paragraph
+bundle: implementation_details
+mode: default
+content:
+  field_engineering_details:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_miscellaneous_files:
+    weight: 8
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_technical_files:
+    weight: 7
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

@@ -1,0 +1,21 @@
+uuid: 13d04095-c99b-4f56-be62-8863ae3e6741
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_decision_notes
+    - paragraphs.paragraphs_type.recommendation_statement
+  module:
+    - text
+id: paragraph.recommendation_statement.field_decision_notes
+field_name: field_decision_notes
+entity_type: paragraph
+bundle: recommendation_statement
+label: 'Decision Notes'
+description: 'Notes describing the decisions and choices that went into the recommendation statement'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

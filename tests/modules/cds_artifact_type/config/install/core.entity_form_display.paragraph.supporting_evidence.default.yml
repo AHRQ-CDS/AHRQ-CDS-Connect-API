@@ -1,0 +1,71 @@
+uuid: e8b43050-8d19-42c4-b069-1971d3897631
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.supporting_evidence.field_artifact_decision_notes
+    - field.field.paragraph.supporting_evidence.field_recommendation_statement
+    - field.field.paragraph.supporting_evidence.field_references
+    - field.field.paragraph.supporting_evidence.field_source
+    - field.field.paragraph.supporting_evidence.field_source_description
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - paragraphs
+    - text
+id: paragraph.supporting_evidence.default
+targetEntityType: paragraph
+bundle: supporting_evidence
+mode: default
+content:
+  field_artifact_decision_notes:
+    weight: 10
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_recommendation_statement:
+    type: entity_reference_paragraphs
+    weight: 9
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_references:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_source:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_source_description:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

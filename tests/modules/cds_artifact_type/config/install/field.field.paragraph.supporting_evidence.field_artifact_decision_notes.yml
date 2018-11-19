@@ -1,0 +1,21 @@
+uuid: 9eef4866-09c4-445b-abf6-6cb4816432ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_artifact_decision_notes
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - text
+id: paragraph.supporting_evidence.field_artifact_decision_notes
+field_name: field_artifact_decision_notes
+entity_type: paragraph
+bundle: supporting_evidence
+label: 'Artifact Decision Notes'
+description: 'Notes about decisions related to the development of the CDS artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

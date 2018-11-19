@@ -1,0 +1,21 @@
+uuid: 412aec04-519d-43de-8436-3f08bc6799b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_interventions_and_actions
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - text
+id: paragraph.artifact_representation.field_interventions_and_actions
+field_name: field_interventions_and_actions
+entity_type: paragraph
+bundle: artifact_representation
+label: 'Interventions and Actions'
+description: 'Actions that may be taken as a result of the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

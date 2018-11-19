@@ -1,0 +1,57 @@
+uuid: 0ce1646b-2a55-4ec1-9411-2f70b6e49033
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_logo_thumbnail
+    - node.type.organization
+  module:
+    - filefield_paths
+    - image
+third_party_settings:
+  filefield_paths:
+    enabled: true
+    file_path:
+      value: 'cds/organization/[node:nid]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+    redirect: false
+    retroactive_update: false
+    active_updating: false
+    file_name:
+      value: '[file:ffp-name-only-original].[file:ffp-extension-original]'
+      options:
+        slashes: false
+        pathauto: false
+        transliterate: false
+id: node.organization.field_logo_thumbnail
+field_name: field_logo_thumbnail
+entity_type: node
+bundle: organization
+label: 'Logo Thumbnail'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: '1 Mb'
+  max_resolution: 256x256
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: image

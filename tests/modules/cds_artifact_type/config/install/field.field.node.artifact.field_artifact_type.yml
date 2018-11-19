@@ -1,0 +1,28 @@
+uuid: ab789cf9-0048-4f7e-8528-aafde8945af3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_artifact_type
+    - node.type.artifact
+    - taxonomy.vocabulary.artifact_type
+id: node.artifact.field_artifact_type
+field_name: field_artifact_type
+entity_type: node
+bundle: artifact
+label: 'Artifact Type'
+description: 'The type of the artifact (e.g., Alert).'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      artifact_type: artifact_type
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

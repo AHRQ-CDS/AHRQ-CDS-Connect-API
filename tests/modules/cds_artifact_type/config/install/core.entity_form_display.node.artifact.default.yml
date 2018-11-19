@@ -1,0 +1,461 @@
+uuid: ac4d8a83-eaf4-493c-ad63-a6099ae45cb2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.artifact.field_artifact_representation
+    - field.field.node.artifact.field_artifact_type
+    - field.field.node.artifact.field_clinical_domain
+    - field.field.node.artifact.field_contributors
+    - field.field.node.artifact.field_copyrights
+    - field.field.node.artifact.field_creation_date
+    - field.field.node.artifact.field_description
+    - field.field.node.artifact.field_experimental
+    - field.field.node.artifact.field_identifier
+    - field.field.node.artifact.field_implementation_details
+    - field.field.node.artifact.field_ip_attestation
+    - field.field.node.artifact.field_keywords
+    - field.field.node.artifact.field_knowledge_level
+    - field.field.node.artifact.field_license
+    - field.field.node.artifact.field_publisher
+    - field.field.node.artifact.field_purpose_and_usage
+    - field.field.node.artifact.field_related_artifacts
+    - field.field.node.artifact.field_repository_information
+    - field.field.node.artifact.field_status
+    - field.field.node.artifact.field_steward
+    - field.field.node.artifact.field_supporting_evidence
+    - field.field.node.artifact.field_testing_experience
+    - field.field.node.artifact.field_version
+    - node.type.artifact
+  module:
+    - content_moderation
+    - datetime
+    - field_group
+    - paragraphs
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_node_edit_form:
+      children:
+        - group_primary_content
+        - group_metadata
+        - group_artifact_creation_and_usag
+        - group_artifact_organization
+        - group_artifact_representation
+        - group_implementation_details
+        - group_purpose_and_usage
+        - group_supporting_evi
+        - group_repository_information
+        - group_testing_experience
+      parent_name: ''
+      weight: 0
+      format_type: tabs
+      format_settings:
+        label: 'Node Edit Form'
+        direction: vertical
+        id: ''
+        classes: ''
+      label: 'Node Edit Form'
+    group_primary_content:
+      children:
+        - title
+        - field_description
+      parent_name: group_node_edit_form
+      weight: 8
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: open
+        description: ''
+        required_fields: true
+      label: 'Primary Content'
+    group_artifact_representation:
+      children:
+        - field_artifact_representation
+      parent_name: group_node_edit_form
+      weight: 12
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Artifact Representation'
+    group_implementation_details:
+      children:
+        - field_implementation_details
+      parent_name: group_node_edit_form
+      weight: 13
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Implementation Details'
+    group_purpose_and_usage:
+      children:
+        - field_purpose_and_usage
+      parent_name: group_node_edit_form
+      weight: 14
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Purpose and Usage'
+    group_repository_information:
+      children:
+        - field_repository_information
+      parent_name: group_node_edit_form
+      weight: 16
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Repository Information'
+    group_testing_experience:
+      children:
+        - field_testing_experience
+      parent_name: group_node_edit_form
+      weight: 17
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Testing Experience'
+    group_supporting_evi:
+      children:
+        - field_supporting_evidence
+      parent_name: group_node_edit_form
+      weight: 15
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Supporting Evidence'
+    group_artifact_creation_and_usag:
+      children:
+        - field_steward
+        - field_publisher
+        - field_license
+        - field_ip_attestation
+        - field_keywords
+        - field_contributors
+        - field_copyrights
+      parent_name: group_node_edit_form
+      weight: 10
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Artifact Creation and Usage'
+    group_artifact_organization:
+      children:
+        - field_knowledge_level
+        - field_clinical_domain
+        - field_related_artifacts
+      parent_name: group_node_edit_form
+      weight: 11
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Artifact Organization'
+    group_metadata:
+      children:
+        - field_creation_date
+        - field_identifier
+        - field_version
+        - field_status
+        - field_artifact_type
+        - field_experimental
+      parent_name: group_node_edit_form
+      weight: 9
+      format_type: tab
+      format_settings:
+        label: Metadata
+        formatter: closed
+        description: 'Identifying Metadata for an artifact'
+        required_fields: true
+        id: artifact_metadata_tab
+        classes: ''
+      label: Metadata
+id: node.artifact.default
+targetEntityType: node
+bundle: artifact
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_artifact_representation:
+    type: entity_reference_paragraphs
+    weight: 48
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_artifact_type:
+    weight: 36
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_clinical_domain:
+    weight: 44
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_contributors:
+    weight: 43
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_copyrights:
+    weight: 38
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_creation_date:
+    weight: 40
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_description:
+    weight: 46
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_experimental:
+    weight: 35
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_identifier:
+    weight: 32
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_implementation_details:
+    type: entity_reference_paragraphs
+    weight: 49
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_ip_attestation:
+    weight: 55
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_keywords:
+    weight: 39
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_knowledge_level:
+    weight: 45
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_license:
+    weight: 37
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_publisher:
+    weight: 42
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_purpose_and_usage:
+    type: entity_reference_paragraphs
+    weight: 50
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_related_artifacts:
+    weight: 47
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_repository_information:
+    type: entity_reference_paragraphs
+    weight: 52
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_status:
+    weight: 34
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_steward:
+    weight: 41
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_supporting_evidence:
+    type: entity_reference_paragraphs
+    weight: 53
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_testing_experience:
+    type: entity_reference_paragraphs
+    weight: 54
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_version:
+    weight: 33
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 121
+    third_party_settings: {  }
+    region: content
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden: {  }

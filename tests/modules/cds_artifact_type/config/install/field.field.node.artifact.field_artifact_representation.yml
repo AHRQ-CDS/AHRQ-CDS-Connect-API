@@ -1,0 +1,48 @@
+uuid: 12332b45-b558-44e6-9d02-9ef9980488e3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_artifact_representation
+    - node.type.artifact
+    - paragraphs.paragraphs_type.artifact_representation
+  module:
+    - entity_reference_revisions
+id: node.artifact.field_artifact_representation
+field_name: field_artifact_representation
+entity_type: node
+bundle: artifact
+label: 'Artifact Representation'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      artifact_representation: artifact_representation
+    target_bundles_drag_drop:
+      artifact_representation:
+        enabled: true
+        weight: 8
+      implementation_details:
+        weight: 9
+        enabled: false
+      purpose_and_usage:
+        weight: 10
+        enabled: false
+      recommendation_statement:
+        weight: 11
+        enabled: false
+      repository_information:
+        weight: 12
+        enabled: false
+      supporting_evidence:
+        weight: 13
+        enabled: false
+      testing_experience:
+        weight: 14
+        enabled: false
+field_type: entity_reference_revisions

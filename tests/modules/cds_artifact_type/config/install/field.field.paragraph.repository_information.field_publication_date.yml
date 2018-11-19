@@ -1,0 +1,21 @@
+uuid: 7dd1aa5b-10f6-4980-b0ea-3598c86a1db5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_publication_date
+    - paragraphs.paragraphs_type.repository_information
+  module:
+    - datetime
+id: paragraph.repository_information.field_publication_date
+field_name: field_publication_date
+entity_type: paragraph
+bundle: repository_information
+label: 'Publication Date'
+description: 'The date that the artifact was declared to be originally published.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,28 @@
+uuid: eaf3b69f-f437-4484-84e0-f023d20015a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_steward
+    - node.type.artifact
+    - node.type.organization
+id: node.artifact.field_steward
+field_name: field_steward
+entity_type: node
+bundle: artifact
+label: Steward
+description: 'Steward(s) of this artifact'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organization: organization
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

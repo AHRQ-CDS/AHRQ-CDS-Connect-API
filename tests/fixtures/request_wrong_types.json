@@ -1,0 +1,19 @@
+{
+    "title": 1,
+    "version": 1.2,
+    "status": 12345,
+    "experimental": "false",
+    "artifact_type": 3,
+    "creation_date": 2018,
+    "creation_and_usage": {
+        "license": "GPL",
+        "keywords": {
+            "key1" : "1",
+            "key2" : "2",
+            "key3" : "3"
+        }
+    },
+    "testing_experience" : [
+        "pilot_experience", "excellent"
+    ]
+}

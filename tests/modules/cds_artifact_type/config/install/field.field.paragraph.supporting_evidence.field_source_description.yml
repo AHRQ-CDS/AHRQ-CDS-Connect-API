@@ -1,0 +1,21 @@
+uuid: 77bf8937-2f8e-442a-8c3e-0eedee1eb894
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_source_description
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - text
+id: paragraph.supporting_evidence.field_source_description
+field_name: field_source_description
+entity_type: paragraph
+bundle: supporting_evidence
+label: 'Source Description'
+description: 'Description of the relationship between this artifact and the Source'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

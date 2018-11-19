@@ -1,0 +1,9 @@
+uuid: f4814141-c2ac-4eb3-9061-af12313c694c
+langcode: en
+status: true
+dependencies: {  }
+id: implementation_details
+label: 'Implementation Details'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

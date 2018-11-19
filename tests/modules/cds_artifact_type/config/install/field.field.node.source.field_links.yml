@@ -1,0 +1,23 @@
+uuid: 27da1e8d-b91a-47e6-994b-4f742e1c4444
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_links
+    - node.type.source
+  module:
+    - link
+id: node.source.field_links
+field_name: field_links
+entity_type: node
+bundle: source
+label: Links
+description: 'Links to original material NOT published in the CDS Connect Repository'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

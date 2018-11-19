@@ -1,0 +1,240 @@
+openapi: 3.0.1
+info:
+  title: CDS Connect API
+  version: '0.1'
+  description: >-
+    An API to allow authenticated users to POST artifacts to the CDS Connect
+    repository using the native artifact format. Currently file attachments must
+    either be uploaded beforehand and linked to during the POST operation, or 
+    manually added via the artifact authoring graphical user interface (GUI).
+paths:
+  /user/login:
+    post:
+      summary: URI for user authentication.
+      parameters:
+        - name: Format
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Path requires ?_format=json query appended at end.
+      responses:
+        '200':
+          description: User successfully authenticated
+          headers:
+            set-cookie:
+              description: Session cookie
+              schema:
+                type: string
+          content:
+            csrf_token:
+              schema:
+                type: string
+        '400':
+          description: Authentication not successful
+          content:
+            body:
+              schema:
+                type: string
+  /cds_api:
+    get:
+      summary: GET the JSON schema for a CDS Connect artifact.
+      responses:
+        '200':
+          description: Respond with JSON schema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nativeArtifactFormat'
+    post:
+      summary: POST a new artifact to CDS Connect
+      description: >-
+        Authenticated users can create new artifacts on the CDS Connect repository 
+        by POSTing valid JSON per the CDS Connect native artifact schema. Users with 
+        accounts on CDS Connect must first POST their user 'name' and 'pass' to 
+        /user/login?_format=json. See documentation for that path above.
+      parameters:
+        - name: Cookie
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nativeArtifactFormat'
+      responses:
+        '201':
+          description: Respond with created artifact.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nativeArtifactFormat'
+components:
+  schemas:
+    nativeArtifactFormat:
+      required:
+        - title
+        - version
+        - status
+        - artifact_type
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        identifier:
+          type: string
+        version:
+          type: string
+        status:
+          type: string
+          description: Taxonomy Term ID
+        experimental:
+          type: boolean
+        artifact_type:
+          type: string
+          description: Taxonomy Term ID
+        creation_date:
+          type: string
+        creation_and_usage:
+          type: object
+          properties:
+            license:
+              type: string
+              description: Taxonomy Term ID
+            copyrights:
+              type: string
+            keywords:
+              type: array
+              items:
+                type: string
+                description: Taxonomy Term ID
+            steward:
+              type: array
+              items:
+                type: string
+                description: Node ID
+            publisher:
+              type: array
+              items:
+                type: string
+                description: Node ID
+            contributors:
+              type: string
+            ip_attestation:
+              type: boolean
+        organization:
+          type: object
+          properties:
+            clinical_domains:
+              type: array
+              items:
+                type: string
+                description: Taxonomy Term ID
+            knowledge_level:
+              type: array
+              items:
+                type: string
+                description: Taxonomy Term ID
+            related_artifacts:
+              type: array
+              items:
+                type: string
+                description: Node ID
+        representation:
+          type: object
+          properties:
+            triggers:
+              type: string
+            inclusions:
+              type: string
+            exclusions:
+              type: string
+            interventions_and_actions:
+              type: string
+            logic_files:
+              type: array
+              items:
+                type: string
+                description: Path to uploaded file
+        implementation_details:
+          type: object
+          properties:
+            engineering_details:
+              type: string
+            technical_files:
+              type: array
+              items:
+                type: string
+                description: Path to uploaded file
+            miscellaneous_files:
+              type: array
+              items:
+                type: string
+                description: Path to uploaded file
+        purpose_and_usage:
+          type: object
+          properties:
+            purpose:
+              type: string
+            intended_population:
+              type: string
+            usage:
+              type: string
+            cautions:
+              type: string
+            test_patients:
+              type: array
+              items:
+                type: string
+                description: Path to uploaded file
+        supporting_evidence:
+          type: object
+          properties:
+            source_description:
+              type: string
+            source:
+              type: array
+              items:
+                type: string
+                description: Source ID
+            references:
+              type: string
+            recommendation_statements:
+              type: object
+              properties:
+                decision_notes:
+                  type: string
+                quality_of_evidence:
+                  type: string
+                recommendation:
+                  type: string
+                strength_of_recommendation:
+                  type: string
+        repository_information:
+          type: object
+          properties:
+            approval_date:
+              type: string
+            expiration_date:
+              type: string
+            last_review_date:
+              type: string
+            publication_date:
+              type: string
+            preview_image:
+              type: string
+              description: Path to uploaded file
+        testing_experience:
+          type: object
+          properties:
+            pilot_experience:
+              type: string

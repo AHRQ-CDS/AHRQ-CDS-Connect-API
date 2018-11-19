@@ -1,0 +1,9 @@
+uuid: 6e7575f2-5a3b-4796-9b41-be5f2d15c3ae
+langcode: en
+status: true
+dependencies: {  }
+id: artifact_representation
+label: 'Artifact Representation'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

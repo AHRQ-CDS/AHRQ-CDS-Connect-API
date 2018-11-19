@@ -1,0 +1,21 @@
+uuid: 441bda3e-35e9-4a1c-8d0f-d4a08c56800d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_recommendation
+    - paragraphs.paragraphs_type.recommendation_statement
+  module:
+    - text
+id: paragraph.recommendation_statement.field_recommendation
+field_name: field_recommendation
+entity_type: paragraph
+bundle: recommendation_statement
+label: Recommendation
+description: 'Summary of clinical recommendations supporting the artifact.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

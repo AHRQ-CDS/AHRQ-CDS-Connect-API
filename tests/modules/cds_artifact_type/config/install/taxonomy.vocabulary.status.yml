@@ -1,0 +1,9 @@
+uuid: d049c519-6499-4b88-91b0-a228f6991e04
+langcode: en
+status: true
+dependencies: {  }
+name: Status
+vid: status
+description: 'The publication status of an artifact'
+hierarchy: 0
+weight: 0

@@ -1,0 +1,28 @@
+uuid: d336ad1d-f16b-49e8-8321-7c9f4a87feaa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_keywords
+    - node.type.artifact
+    - taxonomy.vocabulary.keywords
+id: node.artifact.field_keywords
+field_name: field_keywords
+entity_type: node
+bundle: artifact
+label: Keywords
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      keywords: keywords
+    sort:
+      field: _none
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

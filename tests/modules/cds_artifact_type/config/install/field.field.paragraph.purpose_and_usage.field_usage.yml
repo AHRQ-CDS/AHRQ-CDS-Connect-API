@@ -1,0 +1,21 @@
+uuid: e2571cc3-5b1c-4ad8-9d7d-d2df18fccac1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_usage
+    - paragraphs.paragraphs_type.purpose_and_usage
+  module:
+    - text
+id: paragraph.purpose_and_usage.field_usage
+field_name: field_usage
+entity_type: paragraph
+bundle: purpose_and_usage
+label: Usage
+description: 'The context in which the artifact is applicable or should be used.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

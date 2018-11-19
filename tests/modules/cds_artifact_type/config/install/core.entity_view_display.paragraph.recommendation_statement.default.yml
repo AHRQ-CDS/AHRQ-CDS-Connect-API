@@ -1,0 +1,46 @@
+uuid: 6644918a-67d3-42a3-b737-c7c1e8c45446
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.recommendation_statement.field_decision_notes
+    - field.field.paragraph.recommendation_statement.field_quality_of_evidence
+    - field.field.paragraph.recommendation_statement.field_recommendation
+    - field.field.paragraph.recommendation_statement.field_strength_of_recommendation
+    - paragraphs.paragraphs_type.recommendation_statement
+  module:
+    - text
+id: paragraph.recommendation_statement.default
+targetEntityType: paragraph
+bundle: recommendation_statement
+mode: default
+content:
+  field_decision_notes:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_quality_of_evidence:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_recommendation:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_strength_of_recommendation:
+    weight: 1
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

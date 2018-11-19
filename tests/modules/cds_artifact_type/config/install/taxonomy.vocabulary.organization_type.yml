@@ -1,0 +1,9 @@
+uuid: c7598d33-9a98-41e9-a17d-f8b72baba947
+langcode: en
+status: true
+dependencies: {  }
+name: 'Organization Type'
+vid: organization_type
+description: 'Types of organizations'
+hierarchy: 0
+weight: 0

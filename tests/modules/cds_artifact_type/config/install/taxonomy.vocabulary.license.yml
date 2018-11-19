@@ -1,0 +1,9 @@
+uuid: 16d8f2fd-4162-4264-944c-15aa19929f1c
+langcode: en
+status: true
+dependencies: {  }
+name: License
+vid: license
+description: 'The license governing an artifact''s usage'
+hierarchy: 0
+weight: 0

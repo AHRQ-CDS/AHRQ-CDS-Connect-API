@@ -1,0 +1,21 @@
+uuid: c70ef93b-1b77-464b-8abd-bdd3326fb673
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_description
+    - node.type.artifact
+  module:
+    - text
+id: node.artifact.field_description
+field_name: field_description
+entity_type: node
+bundle: artifact
+label: Description
+description: 'A narrative description of the artifact, in plain language.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

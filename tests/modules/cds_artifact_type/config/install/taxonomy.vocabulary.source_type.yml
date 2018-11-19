@@ -1,0 +1,9 @@
+uuid: 6ed19083-1ba4-47d7-a902-1cab6a07d37d
+langcode: en
+status: true
+dependencies: {  }
+name: 'Source Type'
+vid: source_type
+description: 'The type of document the artifact was derived from'
+hierarchy: 0
+weight: 0

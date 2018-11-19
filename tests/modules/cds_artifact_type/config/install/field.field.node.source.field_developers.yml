@@ -1,0 +1,28 @@
+uuid: 97c5bbba-f5c6-469b-b434-8e03f57c7cb0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_developers
+    - node.type.organization
+    - node.type.source
+id: node.source.field_developers
+field_name: field_developers
+entity_type: node
+bundle: source
+label: Developers
+description: 'Organizations responsible for the development of the source material or guidelines'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organization: organization
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

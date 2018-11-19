@@ -1,0 +1,19 @@
+uuid: 867060b0-4b6d-47ff-9fe3-cac0acc901f2
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_quality_of_evidence
+field_name: field_quality_of_evidence
+entity_type: paragraph
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

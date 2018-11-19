@@ -1,0 +1,21 @@
+uuid: a1472e20-ee91-46f5-ae46-ff1c017a2af6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_approval_date
+    - paragraphs.paragraphs_type.repository_information
+  module:
+    - datetime
+id: paragraph.repository_information.field_approval_date
+field_name: field_approval_date
+entity_type: paragraph
+bundle: repository_information
+label: 'Approval Date'
+description: 'The date the artifact was approved for the repository.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -1,0 +1,28 @@
+uuid: 0a98f65d-92e8-4902-9112-be80b65f3a7c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_source
+    - node.type.source
+    - paragraphs.paragraphs_type.supporting_evidence
+id: paragraph.supporting_evidence.field_source
+field_name: field_source
+entity_type: paragraph
+bundle: supporting_evidence
+label: Source
+description: 'Link to the Source content node describing the source material the artifact was derived from '
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      source: source
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

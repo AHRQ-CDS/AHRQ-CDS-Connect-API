@@ -1,0 +1,73 @@
+{
+    "title": "Title",
+    "description": "Description",
+    "identifier": "1",
+    "version": "1",
+    "status": "Draft",
+    "experimental": true,
+    "artifact_type": "Alert",
+    "creation_date": "2018-11-01T01:19:50Z",
+    "creation_and_usage": {
+        "license": "Apache",
+        "copyrights": "Copyright",
+        "keywords": ["key1", "key2"],
+        "steward": ["1"],
+        "publisher": ["1"],
+        "contributors": "Contributors",
+        "ip_attestation": true
+    },
+    "organization": {
+        "clinical_domains": ["cd1", "cd2"],
+        "knowledge_level": "1-Narrative",
+        "related_artifacts": ["2"]
+    },
+    "artifact_representation": {
+        "triggers": "Triggers",
+        "inclusions": "Inclusions",
+        "exclusions": "Exclusions",
+        "interventions_and_actions": "Interventions and actions",
+        "logic_files": [""]
+    },
+    "implementation_details": {
+        "engineering_details": "Engineering details",
+        "technical_files": [""],
+        "miscellaneous_files": [""]
+    },
+    "purpose_and_usage": {
+        "purpose": "Purpose",
+        "intended_population": "Intended population",
+        "usage": "Usage",
+        "cautions": "Cautions",
+        "test_patients": [""]
+    },
+    "supporting_evidence": {
+        "source_description": "Source description",
+        "source": "3",
+        "references": "References",
+        "artifact_decision_notes": "Artifact decision notes",
+        "recommendation_statement": [
+            {
+                "decision_notes": "Decision notes",
+                "quality_of_evidence": "Quality of evidence",
+                "recommendation": "Recommendation",
+                "strength_of_recommendation": "Strength of recommendation"
+            },
+            {
+                "decision_notes": "Decision notes 2",
+                "quality_of_evidence": "Quality of evidence 2",
+                "recommendation": "Recommendation 2",
+                "strength_of_recommendation": "Strength of recommendation 2"
+            }       
+        ]
+    },
+    "repository_information": {
+        "approval_date": "2018-11-01T01:19:50Z",
+        "expiration_date": "2018-11-01T01:19:50Z",
+        "last_review_date": "2018-11-01T01:19:50Z",
+        "publication_date": "2018-11-01T01:19:50Z",
+        "preview_image": ""
+    },
+    "testing_experience": {
+        "pilot_experience": "Pilot experience"
+    }
+}

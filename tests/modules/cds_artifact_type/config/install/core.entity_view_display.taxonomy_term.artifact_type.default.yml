@@ -1,0 +1,24 @@
+uuid: c78fed21-3345-4e58-b338-b5b1c6e87e5e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.artifact_type.field_type_code
+    - taxonomy.vocabulary.artifact_type
+  module:
+    - text
+third_party_settings: {  }
+id: taxonomy_term.artifact_type.default
+targetEntityType: taxonomy_term
+bundle: artifact_type
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_type_code: true

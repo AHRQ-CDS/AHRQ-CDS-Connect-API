@@ -1,0 +1,9 @@
+uuid: ce975cfc-281b-4552-b276-3a2eae9c1e27
+langcode: en
+status: true
+dependencies: {  }
+name: 'Knowledge Level'
+vid: knowledge_level
+description: 'CDS knowledge levels'
+hierarchy: 0
+weight: 0

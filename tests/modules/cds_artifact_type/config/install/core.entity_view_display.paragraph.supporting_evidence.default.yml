@@ -1,0 +1,60 @@
+uuid: e34b4ea3-6071-41d1-8850-25d9d80a2aa0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.supporting_evidence.field_artifact_decision_notes
+    - field.field.paragraph.supporting_evidence.field_recommendation_statement
+    - field.field.paragraph.supporting_evidence.field_references
+    - field.field.paragraph.supporting_evidence.field_source
+    - field.field.paragraph.supporting_evidence.field_source_description
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - ds
+    - entity_reference_revisions
+    - field_formatter_class
+    - text
+id: paragraph.supporting_evidence.default
+targetEntityType: paragraph
+bundle: supporting_evidence
+mode: default
+content:
+  field_artifact_decision_notes:
+    weight: 4
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_recommendation_statement:
+    type: entity_reference_revisions_entity_view
+    weight: 3
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_references:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_source:
+    weight: 1
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_source_description:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

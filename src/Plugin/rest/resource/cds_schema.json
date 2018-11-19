@@ -1,0 +1,290 @@
+{
+    "$id": "",
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "CDS Connect Schema v1 (draft)",
+    "type": "object",
+    "required": [
+        "title",
+        "version",
+        "status",
+        "artifact_type"
+    ],
+    "properties": {
+        "meta": {
+            "type": ["object","null"],
+            "description": "Optional properties to describe the CDS artifact; note that it is not possible to specify this for the request portion of POST (since POST is responsible for assigning it), but it is part of the JSON response for POST, GET, and PATCH.",
+            "properties": {
+                "node_id": {
+                    "type": "integer",
+                    "description": "Read-only number that is assigned by the repository.  This is needed for referencing an artifact in the REST API.",
+                    "readonly": true
+                },
+                "self": {
+                    "type": "string",
+                    "description": "Read-only URI that is assigned by the repository.  This is needed for referencing the artifact in the REST API.",
+                    "readonly": true
+                }
+            }
+        },
+        "title": {
+            "type": "string",
+            "description": "The name of the artifact."
+        },
+        "description": {
+            "type": ["string","null"],
+            "description": "A narrative description of the artifact, in plain language."
+        },
+        "identifier": {
+            "type": "string",
+            "description": "Identifier defined by CDS Connect team for this artifact",
+            "readOnly": true
+        },
+        "version": {
+            "type": "string",
+            "default": "0.1",
+            "description": "Semantic Version Number of the artifact"
+        },
+        "status": {
+            "type": "string",
+            "default": "Active",
+            "description": "The status of the artifact",
+            "enum": [ "Active", "Retire", "Draft","Unknown" ]
+        },
+        "experimental": {
+            "type": "boolean",
+            "description": "If true, indicates this artifact is for testing, evaluation, educational or demonstration purposes and not intended for clinical use"
+        },
+        "artifact_type": {
+            "type": "string",
+            "default": "Reference Information",
+            "description": "The type of the artifact",
+            "enum": [ "Alert","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning" ]
+        },
+        "creation_date": {
+            "type": "string",
+            "format": "date-time",
+            "examples": [
+                "2018-11-01T01:19:50Z"
+            ]
+        },
+        "creation_and_usage": {
+            "type": "object",
+            "properties": {
+                "license": {
+                    "type": "string",
+                    "description": "Taxonomy Term"
+                },
+                "copyrights": {
+                    "type": "string"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Taxonomy Term"
+                    }
+                },
+                "steward": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Node ID"
+                    }
+                },
+                "publisher": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Node ID"
+                    }
+                },
+                "contributors": {
+                    "type": "string"
+                },
+                "ip_attestation": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "organization": {
+            "type": "object",
+            "properties": {
+                "clinical_domains": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Taxonomy Term"
+                    }
+                },
+                "knowledge_level": {
+                    "type": "string",
+                    "description": "Taxonomy Term"
+                },
+                "related_artifacts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Node ID"
+                    }
+                }
+            }
+        },
+        "artifact_representation": {
+            "type": "object",
+            "properties": {
+                "triggers": {
+                    "type": "string"
+                },
+                "inclusions": {
+                    "type": "string"
+                },
+                "exclusions": {
+                    "type": "string"
+                },
+                "interventions_and_actions": {
+                    "type": "string"
+                },
+                "logic_files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Path to uploaded file"
+                    }
+                }
+            }
+        },
+        "implementation_details": {
+            "type": "object",
+            "properties": {
+                "engineering_details": {
+                    "type": "string"
+                },
+                "technical_files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Path to uploaded file"
+                    }
+                },
+                "miscellaneous_files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Path to uploaded file"
+                    }
+                }
+            }
+        },
+        "purpose_and_usage": {
+            "type": "object",
+            "properties": {
+                "purpose": {
+                    "type": "string"
+                },
+                "intended_population": {
+                    "type": "string"
+                },
+                "usage": {
+                    "type": "string"
+                },
+                "cautions": {
+                    "type": "string"
+                },
+                "test_patients": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Path to uploaded file"
+                    }
+                }
+            }
+        },
+        "supporting_evidence": {
+            "type": "object",
+            "properties": {
+                "source_description": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": ["string","null"],
+                    "description": "Source ID"
+                },
+                "references": {
+                    "type": "string"
+                },
+                "artifact_decision_notes": {
+                    "type": "string"
+                },
+                "recommendation_statement": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "decision_notes": {
+                                "type": "string"
+                            },
+                            "quality_of_evidence": {
+                                "type": "string"
+                            },
+                            "recommendation": {
+                                "type": "string"
+                            },
+                            "strength_of_recommendation": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "repository_information": {
+            "type": "object",
+            "properties": {
+                "approval_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "examples": [
+                        "2018-11-01T01:19:50Z"
+                    ]
+
+                },
+                "expiration_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "examples": [
+                        "2018-11-01T01:19:50Z"
+                    ]
+
+                },
+                "last_review_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "examples": [
+                        "2018-11-01T01:19:50Z"
+                    ]
+
+                },
+                "publication_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "examples": [
+                        "2018-11-01T01:19:50Z"
+                    ]
+
+                },
+                "preview_image": {
+                    "type": "string",
+                    "description": "Path to uploaded file"
+                }
+            }
+        },
+        "testing_experience": {
+            "type": "object",
+            "properties": {
+                "pilot_experience": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

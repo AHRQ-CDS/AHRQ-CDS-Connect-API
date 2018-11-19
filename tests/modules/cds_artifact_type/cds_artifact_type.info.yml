@@ -1,0 +1,14 @@
+name: CDS Artifact Type
+description: CDS Artifact Type
+package: Custom
+type: module
+core: 8.x
+
+dependencies:
+  - drupal:entity_reference_revisions
+  - drupal:paragraphs
+  - drupal:viewsreference
+  - drupal:ds
+  - drupal:field_group
+  - drupal:filefield_paths
+  - drupal:field_formatter_class

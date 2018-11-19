@@ -1,0 +1,36 @@
+uuid: fc36af78-dd9c-417f-b495-9706b8b35de7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_recommendation_statement
+    - paragraphs.paragraphs_type.recommendation_statement
+    - paragraphs.paragraphs_type.supporting_evidence
+  module:
+    - entity_reference_revisions
+id: paragraph.supporting_evidence.field_recommendation_statement
+field_name: field_recommendation_statement
+entity_type: paragraph
+bundle: supporting_evidence
+label: 'Recommendation Statement'
+description: 'Recommendation statement bundles'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      recommendation_statement: recommendation_statement
+    target_bundles_drag_drop:
+      purpose_and_usage:
+        weight: 4
+        enabled: false
+      recommendation_statement:
+        enabled: true
+        weight: 5
+      supporting_evidence:
+        weight: 6
+        enabled: false
+field_type: entity_reference_revisions

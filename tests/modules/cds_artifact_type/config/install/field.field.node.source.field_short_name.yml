@@ -1,0 +1,19 @@
+uuid: 555f622a-6246-4b50-ac11-37773112f20b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_short_name
+    - node.type.source
+id: node.source.field_short_name
+field_name: field_short_name
+entity_type: node
+bundle: source
+label: 'Short Name'
+description: 'Short or summary name for the source'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,20 @@
+uuid: a4fe90ea-1736-4a2a-a76b-8548b13040ad
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_clinical_domain
+field_name: field_clinical_domain
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

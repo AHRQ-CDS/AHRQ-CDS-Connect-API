@@ -1,0 +1,19 @@
+uuid: 44a1bf04-5876-49e2-820f-c5571fce3508
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_short_name
+    - node.type.organization
+id: node.organization.field_short_name
+field_name: field_short_name
+entity_type: node
+bundle: organization
+label: 'Short Name'
+description: 'Short name, possibly informal or familiar name'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

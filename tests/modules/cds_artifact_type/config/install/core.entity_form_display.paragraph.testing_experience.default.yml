@@ -1,0 +1,32 @@
+uuid: 6145fd02-d4f6-4a90-a224-7532c1d16d4d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.testing_experience.field_pilot_experience
+    - paragraphs.paragraphs_type.testing_experience
+  module:
+    - text
+id: paragraph.testing_experience.default
+targetEntityType: paragraph
+bundle: testing_experience
+mode: default
+content:
+  field_pilot_experience:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

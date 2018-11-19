@@ -1,0 +1,9 @@
+uuid: 7d45e347-59a9-4f54-abcf-4eee8efa932e
+langcode: en
+status: true
+dependencies: {  }
+name: Keywords
+vid: keywords
+description: 'Tags for Artifacts'
+hierarchy: 0
+weight: 0

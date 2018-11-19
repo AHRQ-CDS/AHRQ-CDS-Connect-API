@@ -1,0 +1,21 @@
+uuid: 78316b41-7eae-4a54-b547-690d5e8bd80c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_pilot_experience
+    - paragraphs.paragraphs_type.testing_experience
+  module:
+    - text
+id: paragraph.testing_experience.field_pilot_experience
+field_name: field_pilot_experience
+entity_type: paragraph
+bundle: testing_experience
+label: 'Pilot Experience'
+description: 'Notes from a pilot test experience'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
