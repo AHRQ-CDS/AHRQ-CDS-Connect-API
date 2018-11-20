@@ -100,7 +100,7 @@ class CDSArtifactTest extends TestCase
             [ "_default_", 206 ],
             [ "Active", 206 ],
             [ "Draft", 205 ],
-            [ "Retire", 207 ],
+            [ "Retired", 207 ],
             [ "Unknown", 208 ]
         ];
     }
@@ -143,10 +143,7 @@ class CDSArtifactTest extends TestCase
     {
         CDSUtils::assert_json_file_to_schema(
             "request_empty.json",
-            [   "title" => 'The property title is required',
-                "version" => 'The property version is required',
-                "status" => 'The property status is required',
-                "artifact_type" => 'The property artifact_type is required' ],
+            [],
             false );
     }
 
@@ -154,19 +151,11 @@ class CDSArtifactTest extends TestCase
     /** @test */
     public function test_request_empty_with_default()
     {
-        CDSUtils::assert_json_file_to_schema(
-            "request_empty.json",
-            [   "title" => 'The property title is required' ] );
-    }
-
-
-    /** @test
-    */
-    public function test_request_empty2()
-    {
-        $this->expectException(CDSNonconformantJsonException::class);
         $artifact = CDSUtils::setup_artifact( "request_empty.json" );
-        // no more testing can be done since the exception ignores everything after it
+        $this->assertContains( "CDS Artifact uploaded on", $artifact->get_title() );
+        $this->assertEquals( $artifact->get_value('version'), "0.1" );
+        $this->assertEquals( $artifact->get_value('status'), "Active" );
+        $this->assertEquals( $artifact->get_value('artifact_type'), "Reference Information" );
     }
 
 

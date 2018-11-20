@@ -175,21 +175,37 @@ class CDSArtifact {
    * Sets the CDSArtifact object's properties based on a JSON specification that conforms
    * to the CDS JSON schema
    *
-   * @param $json_object the (decoded) JSON object
+   * @param $json the JSON object can be represented as
+   *          a string, an array, or decoded JSON (using PHP's json_decode())
+   *
+   * @param bool $assign_defaults Boolean value that if set to true (default) will assign
+   *      default values as defined by the CDS Schema (in the special case of the title,
+   *      default to "CDS Artifact uploaded by <username> on <timestamp>")
    *
    * @throws CDSNonconformantJsonException
    */
-  public function load_json($json_object) {
-    // Validate json to schema, and assign defaults.
-    $assign_defaults = true; // Defaults are set by json schema.
-    $validator = CDSResource::validate_json( $json_object, $assign_defaults );
+  public function load_json( $json, bool $assign_defaults = true ) {
+    // make $json something consistent and manipulatable
+    if ( is_string( $json ) ) {
+      $json = json_decode( $json );
+    }
+    if ( !is_array( $json ) ) {
+      $json = (array) $json;
+    }
+    if ( $assign_defaults && !array_key_exists( "title", $json ) ) {
+      $json['title'] = "CDS Artifact uploaded on " . date("D, M d, Y");
+    }
+    $json = json_decode( json_encode( $json ) );
+
+    $validator = CDSResource::validate_json( $json, $assign_defaults );
     if ( !$validator->isValid() ) {
       $error = CDSResource::get_schema_validation_errors_as_string( $validator );
+      // die(print_r($error));
       throw new CDSNonconformantJsonException( $error );
     }
 
     // Sanitize input.
-    foreach ($json_object as $key=>$value) {
+    foreach ($json as $key=>$value) {
       if (in_array($key, $this->rich_text_fields)) { // rich text fields
         $this->$key = CDSResource::sanitize_string( $value, true );
       } elseif (in_array($key, $this->non_rich_text_fields)) { // UTF8 text fields
@@ -200,13 +216,10 @@ class CDSArtifact {
     }
 
     // Validate and assign title.
-    if ( isset($json_object->title) ) {
-      $this->set_title( $json_object->title );
-    } elseif ( isset($json_object->name) ) {
-      $this->set_title( $json_object->name );
-    } else {
-      //This is the only true requirement, everything else we can set a default
-      throw new \Exception("Missing critical required parameter 'title'.");
+    if ( isset($json->title) ) {
+      $this->set_title( $json->title );
+    } elseif ( isset($json->name) ) {
+      $this->set_title( $json->name );
     }
   }
 

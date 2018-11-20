@@ -3,12 +3,6 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "CDS Connect Schema v1 (draft)",
     "type": "object",
-    "required": [
-        "title",
-        "version",
-        "status",
-        "artifact_type"
-    ],
     "properties": {
         "meta": {
             "type": ["object","null"],
@@ -28,6 +22,7 @@
         },
         "title": {
             "type": "string",
+            "default": "CDS Artifact Title",
             "description": "The name of the artifact."
         },
         "description": {
@@ -48,7 +43,7 @@
             "type": "string",
             "default": "Active",
             "description": "The status of the artifact",
-            "enum": [ "Active", "Retire", "Draft","Unknown" ]
+            "enum": [ "Active", "Retired", "Draft","Unknown" ]
         },
         "experimental": {
             "type": "boolean",
@@ -88,14 +83,14 @@
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "description": "Node ID"
+                        "description": "Node title"
                     }
                 },
                 "publisher": {
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "description": "Node ID"
+                        "description": "Node title"
                     }
                 },
                 "contributors": {
@@ -124,7 +119,7 @@
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "description": "Node ID"
+                        "description": "Node title"
                     }
                 }
             }
@@ -148,7 +143,7 @@
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "description": "Path to uploaded file"
+                        "description": "GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
                     }
                 }
             }
@@ -207,7 +202,7 @@
                 },
                 "source": {
                     "type": ["string","null"],
-                    "description": "Source ID"
+                    "description": "Source title"
                 },
                 "references": {
                     "type": "string"

@@ -103,7 +103,9 @@ class CDSResource extends ResourceBase {
   /**
    * Responds to POST /cds_api/ requests.
    *
-   * @param string $payload A CDS JSON Schema compliant string containing the artifact to be added
+   * @param $payload A CDS JSON Schema compliant array representation of the request payload
+   *    defining the artifact to be added
+   *
    *    Note that the `"meta"` property should not be specified since this method will
    *    fill that in once the data is saved to the database.
    *
@@ -117,36 +119,37 @@ class CDSResource extends ResourceBase {
    *
    * @todo need to change exceptions to do CDS-specific JSON exception messages
    */
-  public function post($payload) {
+  public function post( $payload ) {
     if (!$this->currentUser->hasPermission('create artifact content')) {
       // @todo the message that is actually sent is the default message, different than specified here
       throw new AccessDeniedHttpException("Only authorized users can modify the repository.");
     }
-    $decoded_payload = json_decode(json_encode($payload));
-    // @todo this remains untested and not fully implemented; it is here because without it, a JSON document of "{}" does not work
+
+    // this block remains untested; it was here because without it, a JSON document of "{}" did not work,
+    // but that is no longer the case.
     // "normal" processing is single object, in the else statement
-    if (is_array($decoded_payload)) {
-      $created_nodes = [];
-      foreach ($decoded_payload as $element) {
-        try {
-          $tmp = new CDSArtifact();
-          $tmp->load_json($element);
-          $tmp->get_as_node();
-          $created_nodes[] = $tmp->get_title();
-        } catch (\Exception $e) {
-          //if for some reason the node cant be created, we attempt to explain why
-          $created_nodes[] = "Failed to create one Node due to Exception: " . $e->getMessage();
-        }
-      }
-      $response = ['nodes_created' => $created_nodes];
-      return new ResourceResponse($response);
-    } else { // payload is a single artifact
+    // if (is_array($payload)) {
+    //   $created_nodes = [];
+    //   foreach ($payload as $element) {
+    //     try {
+    //       $tmp = new CDSArtifact();
+    //       $tmp->load_json($element);
+    //       $tmp->get_as_node();
+    //       $created_nodes[] = $tmp->get_title();
+    //     } catch (\Exception $e) {
+    //       //if for some reason the node cant be created, we attempt to explain why
+    //       $created_nodes[] = "Failed to create one Node due to Exception: " . $e->getMessage();
+    //     }
+    //   }
+    //   $response = ['nodes_created' => $created_nodes];
+    //   return new ResourceResponse($response);
+    // } //else { // payload is a single artifact
       $artifact = new CDSArtifact();
-      $artifact->load_json($decoded_payload);
+      $artifact->load_json( $payload );
       $artifact_node = $artifact->get_as_node();  // @todo node was saved! should really do this separately from a "get" function
       $artifact->load_node( $artifact_node );
       return new ResourceResponse( $artifact->get_as_assoc_array() );
-    }
+    // }
   }
 
 
@@ -186,7 +189,7 @@ class CDSResource extends ResourceBase {
   /**
    * utility to validate a json object against the CDS schema,
    *
-   * @param $json the JSON object
+   * @param mixed $json the decoded JSON object
    *
    * @param bool $applyDefaults
    *    Boolean to specify whether to apply the defaults specified in the CDS JSON Schema
@@ -194,14 +197,12 @@ class CDSResource extends ResourceBase {
    *
    * @return the Validator object used to valiate so that any errors can be processed/noted
   */
-  public static function validate_json( $json, $applyDefaults=true ): Validator
+  public static function validate_json( $json, bool $applyDefaults=true ): Validator
   {
       $schema = CDSArtifact::get_schema();
-
       $validator = new Validator;
       $constraints = $applyDefaults ? Constraint::CHECK_MODE_APPLY_DEFAULTS : Constraint::CHECK_MODE_NONE;
       $validator->validate( $json, $schema, $constraints );
-
       return $validator;
   }
 

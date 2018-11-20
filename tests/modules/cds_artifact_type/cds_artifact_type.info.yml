@@ -12,3 +12,4 @@ dependencies:
   - drupal:field_group
   - drupal:filefield_paths
   - drupal:field_formatter_class
+  

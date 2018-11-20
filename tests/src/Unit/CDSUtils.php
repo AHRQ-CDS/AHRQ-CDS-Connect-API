@@ -56,7 +56,7 @@ class CDSUtils
             "_default_" => 206,
             "Active" => 206,
             "Draft" => 205,
-            "Retire" => 207,
+            "Retired" => 207,
             "Unknown" => 208,
         ];
         return ( array_key_exists( $status, $status_to_tid ) ) ? $status_to_tid[$status] : $status_to_tid["_default_"];

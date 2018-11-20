@@ -121,12 +121,7 @@ class JSONSchemaTest extends TestCase
     public function test_request_empty_no_defaults()
     {
         CDSUtils::assert_json_file_to_schema(
-            "request_empty.json",
-            [   "title" => 'The property title is required',
-                "version" => 'The property version is required',
-                "artifact_type" => 'The property artifact_type is required',
-                "status" => 'The property status is required' ],
-            false );
+            "request_empty.json" );
     }
 
 
@@ -134,9 +129,7 @@ class JSONSchemaTest extends TestCase
     public function test_request_empty_with_defaults()
     {
         CDSUtils::assert_json_file_to_schema(
-            "request_empty.json",
-            [ "title" => 'The property title is required' ],
-            true );
+            "request_empty.json" );
     }
 
 
@@ -155,7 +148,7 @@ class JSONSchemaTest extends TestCase
             "request_wrong_types.json",
             [   'title' => 'Integer value found, but a string is required',
                 'version' => 'Double value found, but a string is required',
-                'status' => 'Does not have a value in the enumeration ["Active","Retire","Draft","Unknown"]',
+                'status' => 'Does not have a value in the enumeration ["Active","Retired","Draft","Unknown"]',
                 'experimental' => 'String value found, but a boolean is required',
                 'creation_and_usage.keywords' => 'Object value found, but an array is required',
                 'testing_experience' => 'Array value found, but an object is required',
@@ -255,7 +248,7 @@ class JSONSchemaTest extends TestCase
     {
         $json = CDSUtils::read_json( "request_wrong_enum.json" );
         CDSUtils::assert_json_to_schema( $json,
-            [ 'status' => 'Does not have a value in the enumeration ["Active","Retire","Draft","Unknown"]',
+            [ 'status' => 'Does not have a value in the enumeration ["Active","Retired","Draft","Unknown"]',
               'artifact_type' => 'Does not have a value in the enumeration ["Alert","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning"]' ],
             true );
 
