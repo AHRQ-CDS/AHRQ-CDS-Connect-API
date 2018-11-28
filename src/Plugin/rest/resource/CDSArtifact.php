@@ -152,8 +152,6 @@ class CDSArtifact {
    *  @return the CDS JSON Schema
    */
   public static function get_schema() {
-    //TODO: Autogenerate and embed these
-    $id_uri = 'https://cds.ahrq.com/person.schema.json';
     $jsonstr = file_get_contents( __DIR__ . "/cds_schema.json" );
     return json_decode( $jsonstr );
   }
