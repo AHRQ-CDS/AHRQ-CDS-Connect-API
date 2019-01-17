@@ -6,7 +6,7 @@ The CDS Connect API can be installed in the same manner as any other Drupal 8 mo
 
 The [REST UI module](https://www.drupal.org/project/restui) is not required, but it makes enabling and configuring the RESTful endpoints provided by the CDS Connect API much easier.
 
-The CDS Connect API assumes that a CDS artifact content type has been defined in the Drupal instance in which it is installed. A module that installs the CDS Connect artifact content type is included with the test fixtures (discussed below).
+The CDS Connect API assumes that a CDS artifact content type has been defined in the Drupal instance in which it is installed. A module that installs the CDS Connect artifact content type is included in the `modules` folder (discussed below).
 
 ## Tests
 
@@ -18,7 +18,7 @@ Most tests in the `tests` folder are quick-running unit tests which focus on the
 
 The kernel tests require the CDS artifact content type be installed, since they involve defining and saving CDS artifacts to the test database. To help with testing, a custom module has been created which defines an `artifact` content type upon installation. PHPUnit installs this module prior to running any of the kernel tests.
 
-This custom module, located in the `tests/modules/cds_artifact_type` directory. If desired, this module can be installed separately from the CDS Connect API module to provide an `artifact` content type in a Drupal installation.
+This custom module, located in the `modules/cds_artifact_type` directory. If desired, this module can be installed alongside the CDS Connect API module to provide an `artifact` content type in a Drupal installation.
 
 ## Access Control and Authentication
 

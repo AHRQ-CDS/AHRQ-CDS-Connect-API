@@ -57,9 +57,9 @@
         },
         "creation_date": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "examples": [
-                "2018-11-01T01:19:50Z"
+                "2018-11-01"
             ]
         },
         "creation_and_usage": {
@@ -237,33 +237,33 @@
             "properties": {
                 "approval_date": {
                     "type": "string",
-                    "format": "date-time",
+                    "format": "date",
                     "examples": [
-                        "2018-11-01T01:19:50Z"
+                        "2018-11-01"
                     ]
 
                 },
                 "expiration_date": {
                     "type": "string",
-                    "format": "date-time",
+                    "format": "date",
                     "examples": [
-                        "2018-11-01T01:19:50Z"
+                        "2018-11-01"
                     ]
 
                 },
                 "last_review_date": {
                     "type": "string",
-                    "format": "date-time",
+                    "format": "date",
                     "examples": [
-                        "2018-11-01T01:19:50Z"
+                        "2018-11-01"
                     ]
 
                 },
                 "publication_date": {
                     "type": "string",
-                    "format": "date-time",
+                    "format": "date",
                     "examples": [
-                        "2018-11-01T01:19:50Z"
+                        "2018-11-01"
                     ]
 
                 },
@@ -278,6 +278,24 @@
             "properties": {
                 "pilot_experience": {
                     "type": "string"
+                }
+            }
+        },
+        "coverage_requirements_discovery": {
+            "type": "object",
+            "description": "Fields pertaining to coverage requirements discovery (CRD) for electronic prescribing (eRx) of medication or durable medical equipment (DME).",
+            "properties": {
+                "payer" : {
+                    "type": "string",
+                    "description": "The name of the payer for the medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
+                },
+                "code_system": {
+                    "type": "string",
+                    "description": "The name of the code system used to reference medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
+                },
+                "erx_code": {
+                    "type": "string",
+                    "description": "The electronic prescribing (eRx) code representing a specific piece of medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
                 }
             }
         }

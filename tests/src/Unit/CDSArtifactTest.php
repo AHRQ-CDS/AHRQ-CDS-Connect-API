@@ -224,7 +224,7 @@ class CDSArtifactTest extends TestCase
         $this->assertEquals( $artifact->get_value( "status" ), "Draft" );
         $this->assertEquals( $artifact->get_value( "experimental" ), true );
         $this->assertEquals( $artifact->get_value( "artifact_type" ), "Alert" );
-        $this->assertEquals( $artifact->get_value( "creation_date" ), "2018-11-01T01:19:50Z" );
+        $this->assertEquals( $artifact->get_value( "creation_date" ), "2018-11-01" );
         $this->assertEquals( $artifact->get_value( "license" ), "Apache" );
         $this->assertEquals( $artifact->get_value( "copyrights" ), "Copyright" );
         $this->assertArraySubset( $artifact->get_value( "keywords" ), ["key1", "key2"] );
@@ -262,10 +262,10 @@ class CDSArtifactTest extends TestCase
         $this->assertEquals( $rec_states->quality_of_evidence, "Quality of evidence 2" );
         $this->assertEquals( $rec_states->recommendation, "Recommendation 2" );
         $this->assertEquals( $rec_states->strength_of_recommendation, "Strength of recommendation 2" );
-        $this->assertEquals( $artifact->get_value( "approval_date" ), "2018-11-01T01:19:50Z" );
-        $this->assertEquals( $artifact->get_value( "expiration_date" ), "2018-11-01T01:19:50Z" );
-        $this->assertEquals( $artifact->get_value( "last_review_date" ), "2018-11-01T01:19:50Z" );
-        $this->assertEquals( $artifact->get_value( "publication_date" ), "2018-11-01T01:19:50Z" );
+        $this->assertEquals( $artifact->get_value( "approval_date" ), "2018-11-01" );
+        $this->assertEquals( $artifact->get_value( "expiration_date" ), "2018-11-01" );
+        $this->assertEquals( $artifact->get_value( "last_review_date" ), "2018-11-01" );
+        $this->assertEquals( $artifact->get_value( "publication_date" ), "2018-11-01" );
         $this->assertEquals( $artifact->get_value( "preview_image" ), "" );
         $this->assertEquals( $artifact->get_value( "pilot_experience" ), "Pilot experience" );
 

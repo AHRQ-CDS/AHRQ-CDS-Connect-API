@@ -32,9 +32,15 @@ dependencies:
     - entity_reference_revisions
     - field_formatter_class
     - field_group
+    - panelizer
     - text
     - user
 third_party_settings:
+  panelizer:
+    enable: false
+    custom: false
+    allow: false
+    default: default
   field_group:
     group_artifact_creation_fields:
       children:
@@ -184,7 +190,11 @@ content:
     label: above
     settings:
       link: true
-    third_party_settings: {  }
+    third_party_settings:
+      field_formatter_class:
+        class: cds-keywords
+      ds:
+        ds_limit: ''
     type: entity_reference_label
     region: content
   field_knowledge_level:
@@ -193,7 +203,9 @@ content:
     settings:
       view_mode: knowledge_level_graphic
       link: false
-    third_party_settings: {  }
+    third_party_settings:
+      field_formatter_class:
+        class: artifact-knowledge-level
     type: entity_reference_entity_view
     region: content
   field_license:

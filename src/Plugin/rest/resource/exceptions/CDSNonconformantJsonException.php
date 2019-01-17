@@ -18,7 +18,7 @@ class CDSNonconformantJsonException extends CDSException
      */
     public function __construct( string $errors )
     {
-        CDSException::__construct( 400, CDSException::NONCONFORMANT_JSON, ['@errors' => $errors ] );
+        CDSException::__construct( 400, t( CDSException::NONCONFORMANT_JSON, ['@errors' => $errors ] ) );
     }
 
 }

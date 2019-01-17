@@ -20,6 +20,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;
 use Drupal\cds_api\Plugin\rest\resource\exceptions\CDSNonconformantJsonException;
+use Psr\Log\LoggerInterface;
 
 /**
  * The main CDS Artifact logical class
@@ -87,6 +88,10 @@ class CDSArtifact {
     private $preview_image;//file
   //Testing Experience
     private $pilot_experience;
+  // Coverage Requirements Discovery (CRD)
+    private $payer;
+    private $code_system;
+    private $electronic_prescribing_code;
 
 
   // ----- Arrays to categorize schema properties ----- ----- ----- ----- ----- ----- -----
@@ -106,7 +111,7 @@ class CDSArtifact {
       'test_patients',
       'source', 'approval_date',
       'expiration_date','last_review_date','publication_date',
-      'preview_image'
+      'preview_image', 'payer', 'code_system', 'electronic_prescribing_code'
     );
 
   private $rich_text_fields =
@@ -129,7 +134,8 @@ class CDSArtifact {
     'purpose_and_usage',
     'supporting_evidence',
     'repository_information',
-    'testing_experience'
+    'testing_experience',
+    'coverage_requirements_discovery'
   );
 
   private $valid_paragraph_types = array(
@@ -195,9 +201,9 @@ class CDSArtifact {
     }
     $json = json_decode( json_encode( $json ) );
 
-    $validator = CDSResource::validate_json( $json, $assign_defaults );
+    $validator = CDSSchema::validate_json( $json, $assign_defaults );
     if ( !$validator->isValid() ) {
-      $error = CDSResource::get_schema_validation_errors_as_string( $validator );
+      $error = CDSSchema::get_schema_validation_errors_as_string( $validator );
       // die(print_r($error));
       throw new CDSNonconformantJsonException( $error );
     }
@@ -205,9 +211,9 @@ class CDSArtifact {
     // Sanitize input.
     foreach ($json as $key=>$value) {
       if (in_array($key, $this->rich_text_fields)) { // rich text fields
-        $this->$key = CDSResource::sanitize_string( $value, true );
+        $this->$key = CDSSchema::sanitize_string( $value, true );
       } elseif (in_array($key, $this->non_rich_text_fields)) { // UTF8 text fields
-        $this->$key = CDSResource::sanitize_string( $value );
+        $this->$key = CDSSchema::sanitize_string( $value );
       } elseif (in_array($key, $this->embedding_objects)) {
         $this->get_embedded_object($value); // embedding objects need to be unpacked
       }
@@ -245,6 +251,9 @@ class CDSArtifact {
     $this->set_value( 'copyrights',     $this->node_get_value( $node, 'field_copyrights' ) );
     $this->set_value( 'contributors',   $this->node_get_value( $node, 'field_contributors' ) );
     $this->set_value( 'ip_attestation', (boolean) $this->node_get_value( $node, 'field_ip_attestation' ) );
+    $this->set_value( 'payer', $this->node_get_value( $node, 'field_payer' ) );
+    $this->set_value( 'code_system', $this->node_get_value( $node, 'field_code_system' ) );
+    $this->set_value( 'electronic_prescribing_code', $this->node_get_value( $node, 'field_erx_code' ) );
 
     // Fields which reference at most one taxonomy term.
     $this->set_value( 'status',           $this->node_get_value( $node, 'field_status' ) );
@@ -335,7 +344,7 @@ class CDSArtifact {
    *    The title of this artifact
    */
   public function set_title( $title ) {
-    $this->title = CDSResource::sanitize_string( $title );
+    $this->title = CDSSchema::sanitize_string( $title );
   }
 
 
@@ -430,16 +439,16 @@ class CDSArtifact {
           if (is_object($val)) { // Element is an object we must unpack
             $tmp_object = new \stdClass();
             foreach ($val as $k=>$v) {
-              $tmp_object->$k = CDSResource::sanitize_string( $v , $permissive);
+              $tmp_object->$k = CDSSchema::sanitize_string( $v , $permissive);
             }
             $string_array[] = $tmp_object;
           } else { // Element is not an object
-            $string_array[] = CDSResource::sanitize_string( $val , $permissive);
+            $string_array[] = CDSSchema::sanitize_string( $val , $permissive);
           }
         }
         $this->$key = $string_array;
       } else { // element is not array; sanitize its single value.
-        $this->$key = CDSResource::sanitize_string( $value , $permissive );
+        $this->$key = CDSSchema::sanitize_string( $value , $permissive );
       }
     }
   }
@@ -462,7 +471,7 @@ class CDSArtifact {
    */
   public function get_as_assoc_array() {
     // note that in the mapping assignments below,
-    // sopme values in this class are single values but stored in an array
+    // some values in this class are single values but stored in an array
     // (e.g., status), and so it is assigned as $this->property[0]
     return [
       'meta' => [
@@ -526,6 +535,11 @@ class CDSArtifact {
       ],
       'testing_experience' => [
         'pilot_experience' => $this->pilot_experience
+      ],
+      'coverage_requirements_discovery' => [
+        'payer' => $this->payer,
+        'code_system' => $this->code_system,
+        'electronic_prescribing_code' => $this->electronic_prescribing_code
       ]
     ];
   }
@@ -560,6 +574,9 @@ class CDSArtifact {
     CDSArtifact::node_set_field($node,'field_copyrights',$this->copyrights);
     CDSArtifact::node_set_field($node,'field_contributors',$this->contributors);
     CDSArtifact::node_set_field($node,'field_ip_attestation',(boolean) $this->ip_attestation);
+    CDSArtifact::node_set_field($node,'field_payer', $this->payer);
+    CDSArtifact::node_set_field($node,'field_code_system', $this->code_system);
+    CDSArtifact::node_set_field($node,'field_erx_code', $this->electronic_prescribing_code);
 
     // Fields which reference at most one taxonomy term.
     // Status
@@ -614,7 +631,6 @@ class CDSArtifact {
    */
   public function update_node($node) {
 
-
     // Fields with simple values (e.g., string).
     CDSArtifact::node_set_field($node,'title', $this->title);
     CDSArtifact::node_set_field($node,'field_description',$this->description);
@@ -625,6 +641,9 @@ class CDSArtifact {
     CDSArtifact::node_set_field($node,'field_copyrights',$this->copyrights);
     CDSArtifact::node_set_field($node,'field_contributors',$this->contributors);
     CDSArtifact::node_set_field($node,'field_ip_attestation',(boolean) $this->ip_attestation);
+    CDSArtifact::node_set_field($node,'field_payer', $this->payer);
+    CDSArtifact::node_set_field($node,'field_code_system', $this->code_system);
+    CDSArtifact::node_set_field($node,'field_erx_code', $this->electronic_prescribing_code);
 
     // Fields which reference at most one taxonomy term.
     // Status
@@ -757,7 +776,14 @@ class CDSArtifact {
     if (empty($value) && $value!=false) {
       return $node;
     }
-    $node->set($field, $value);
+    if ($node->hasField($field)) {
+      $node->set($field, $value);
+    } else {
+      \Drupal::logger('cds_api')->error(
+        t("Attempt to set non-existent node field @a",
+        ['@a' => $field])
+      );
+    }
     return $node;
   }
 

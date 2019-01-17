@@ -8,3 +8,5 @@ dependencies:
   - drupal:rest
   - drupal:paragraphs
   - drupal:taxonomy
+components:
+  - cds_artifact_type

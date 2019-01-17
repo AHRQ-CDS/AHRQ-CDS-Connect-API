@@ -18,7 +18,7 @@ class CDSNotAuthorizedException extends CDSException
     public function __construct( integer $id=null )
     {
         $id = ($id) ? $id : "";
-        parent::__construct( 403, CDSException::NOT_AUTHORIZED, ['@id' => $id ] );
+        parent::__construct( 403, t( CDSException::NOT_AUTHORIZED, ['@id' => $id ] ) );
     }
 
 }

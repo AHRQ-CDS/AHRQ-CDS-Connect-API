@@ -25,7 +25,7 @@ class CDSNodeIdRequiredException extends CDSException
     {
         $verb = ($verb) ? $verb : \Drupal::request()->getMethod();
         $path = ($path) ? $path : \Drupal::request()->getRequestUri();
-        parent::__construct( 404, CDSException::NODE_ID_REQUIRED, ['@verb' => $verb, '@path' => $path ] );
+        parent::__construct( 404, t( CDSException::NODE_ID_REQUIRED, ['@verb' => $verb, '@path' => $path ] ) );
     }
 
 }

@@ -6,7 +6,7 @@
     "status": "Draft",
     "experimental": true,
     "artifact_type": "Alert",
-    "creation_date": "2018-11-01T01:19:50Z",
+    "creation_date": "2018-11-01",
     "creation_and_usage": {
         "license": "Apache",
         "copyrights": "Copyright",
@@ -61,10 +61,10 @@
         ]
     },
     "repository_information": {
-        "approval_date": "2018-11-01T01:19:50Z",
-        "expiration_date": "2018-11-01T01:19:50Z",
-        "last_review_date": "2018-11-01T01:19:50Z",
-        "publication_date": "2018-11-01T01:19:50Z",
+        "approval_date": "2018-11-01",
+        "expiration_date": "2018-11-01",
+        "last_review_date": "2018-11-01",
+        "publication_date": "2018-11-01",
         "preview_image": ""
     },
     "testing_experience": {

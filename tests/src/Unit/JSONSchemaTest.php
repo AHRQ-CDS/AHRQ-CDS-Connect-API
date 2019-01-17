@@ -4,10 +4,12 @@ namespace Drupal\Tests\cds_api\Unit;
 
 use Drupal\Tests\cds_api\Unit\CDSUtils;
 use Drupal\cds_api\Plugin\rest\resource\CDSResource;
+use Drupal\cds_api\Plugin\rest\resource\CDSSchema;
 
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;
 use PHPUnit\Framework\TestCase;
+
 
 /**
  * JSONSchemaTest
@@ -36,12 +38,12 @@ class JSONSchemaTest extends TestCase
         if ( $expected ) {
             $this->assertTrue(
                 $validator->isValid(),
-                CDSResource::get_schema_validation_errors_as_string($validator) );
+                CDSSchema::get_schema_validation_errors_as_string($validator) );
         }
         else {
             $this->assertFalse(
                 $validator->isValid(),
-                CDSResource::get_schema_validation_errors_as_string($validator) );
+                CDSSchema::get_schema_validation_errors_as_string($validator) );
         }
     }
 
@@ -153,7 +155,7 @@ class JSONSchemaTest extends TestCase
                 'creation_and_usage.keywords' => 'Object value found, but an array is required',
                 'testing_experience' => 'Array value found, but an object is required',
                 'artifact_type' => 'Does not have a value in the enumeration ["Alert","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning"]',
-                'creation_date' => 'Invalid date-time 2018, expected format YYYY-MM-DDThh:mm:ssZ or YYYY-MM-DDThh:mm:ss+hh:mm'
+                'creation_date' => 'Invalid date "2018-01", expected format YYYY-MM-DD'
             ] );
     }
 

@@ -21,6 +21,7 @@ For information about contributing to this project, please see [CONTRIBUTING](CO
 The CDS Connect API module consists of three directories:
 
 * `doc`: Contains additional documentation.
+* `modules`: Contains a sub-module for installing a local copy of the CDS Connect `artifact` [node bundle](https://www.drupal.org/docs/8/api/entity-api/bundles).
 * `src`: Contains the source code for the CDS Connect API, which is a [Plugin](https://www.drupal.org/node/2087839) to the [REST module](https://www.drupal.org/docs/8/core/modules/rest) in Drupal Core.
 * `tests`: Contains [PHPUnit](https://github.com/sebastianbergmann/phpunit) tests and fixtures.
 
@@ -36,7 +37,7 @@ In addition, the [json-schema](https://github.com/justinrainbow/json-schema) ven
 
 ## LICENSE
 
-Copyright 2018 Agency for Healthcare Research and Quality.
+Copyright 2019 Agency for Healthcare Research and Quality.
 
 Licensed under the GNU General Public License, version 2 or later;
 you may not use this file except in compliance with the License.

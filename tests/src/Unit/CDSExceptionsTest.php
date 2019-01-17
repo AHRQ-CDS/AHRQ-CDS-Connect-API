@@ -91,9 +91,10 @@ class CDSExceptionsTest extends TestCase
      */
     public function test_CDSUnknownNodeIdException()
     {
-        $ex = new CDSUnknownNodeIdException( 1 );
+        $ex = new CDSUnknownNodeIdException( 1234 );
         $this->assertEquals( $ex->getStatusCode(), 404 );
         $this->assertContains( "Error: CDS-1001", $ex->getMessage() );
+        // $this->assertContains( "1234", $ex->getMessage() );
         $this->expectException(CDSUnknownNodeIdException::class);
         throw $ex;
     }

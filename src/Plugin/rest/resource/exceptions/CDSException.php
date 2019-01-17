@@ -25,7 +25,7 @@ if(!function_exists('t')) {
      *
      * @return string
      */
-    function t(string $string) : string {
+    function t(string $string, $arr=null) : string {
         return $string;
     }
 }
@@ -43,7 +43,7 @@ if(!function_exists('t')) {
  * @example CDSArtifact::load_json()    Contains a good example of how to throw a CDS-specific exception (i.e., CDSNonconformantJsonException)
  *      complete with tailored error messages.  Basically (from the load_json() example):
  *      ```
- *          $error = CDSResource::get_schema_validation_errors_as_string();
+ *          $error = CDSSchema::get_schema_validation_errors_as_string();
  *          throw new CDSNonconformantJsonException( $error );
  *      ```
  *      produces the JSON (e.g.,):

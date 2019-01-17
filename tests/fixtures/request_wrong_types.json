@@ -4,7 +4,7 @@
     "status": 12345,
     "experimental": "false",
     "artifact_type": 3,
-    "creation_date": 2018,
+    "creation_date": "2018-01",
     "creation_and_usage": {
         "license": "GPL",
         "keywords": {

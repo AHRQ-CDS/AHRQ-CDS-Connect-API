@@ -6,6 +6,7 @@ use PHPUnit\Framework\Assert;
 use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;
 use Drupal\cds_api\Plugin\rest\resource\CDSArtifact;
+use Drupal\cds_api\Plugin\rest\resource\CDSSchema;
 
 
 /**
@@ -121,23 +122,6 @@ class CDSUtils
     // ----- Utility JSON-Schema methods ---------------------------------------------
 
 
-    /** utility to validate a json object against the CDS schema,
-     * @param the JSON object
-     *  @return the Validator object used to valiate so that any errors can be processed/noted
-    */
-    public static function validate_json( $json, $applyDefaults=true ): Validator
-    {
-        // return CDSArtifact::validate_json( $json, $applyDefaults );
-
-        $schema = CDSUtils::getSchema();
-
-        $validator = new Validator;
-        $constraints = $applyDefaults ? Constraint::CHECK_MODE_APPLY_DEFAULTS : Constraint::CHECK_MODE_NONE;
-        $validator->validate( $json, $schema, $constraints );
-
-        return $validator;
-    }
-
 
     /** utility to read in a json file, and run validation on it against the CDS schema,
      * @filename the name of the json file
@@ -146,7 +130,7 @@ class CDSUtils
     public static function validate_json_file( $filename, $applyDefaults=true ): Validator
     {
         $artifact = CDSUtils::read_json( $filename );
-        return CDSUtils::validate_json( $artifact, $applyDefaults );
+        return CDSSchema::validate_json( $artifact, $applyDefaults );
     }
 
 
@@ -159,9 +143,9 @@ class CDSUtils
     */
     public static function assert_json_to_schema( $json, $expectedErrors=[], $applyDefaults=true )
     {
-        $validator = CDSUtils::validate_json( $json, $applyDefaults, $applyDefaults );
+        $validator = CDSSchema::validate_json( $json, $applyDefaults, $applyDefaults );
         $isValid = $validator->isValid();
-        $validatorErrors = CDSUtils::get_schema_validation_errors_as_array( $validator );
+        $validatorErrors = CDSSchema::get_schema_validation_errors_as_array( $validator );
         Assert::assertEquals( $expectedErrors, $validatorErrors );
         $retval = ( $isValid ) ? ( $expectedErrors == $validatorErrors ): false;
     }
@@ -179,33 +163,8 @@ class CDSUtils
     }
 
 
-    /** @returns the validation error object as an array of errors
-     *      of the form [key] => message
-     */
-    public static function get_schema_validation_errors_as_array( $validator )
-    {
-        $retval = [];
-        foreach ($validator->getErrors() as $error) {
-            $retval[$error['property']] = $error['message'];
-        }
-        return $retval;
-    }
 
-
-    /** @returns all the validation errors in the validator error object as a string
-     *      useful for printing out the errors in phpunit assert statements
-    */
-    public static function get_schema_validation_errors_as_string( $validator )
-    {
-        $retval = "";
-        foreach ($validator->getErrors() as $error) {
-            $retval = $retval . sprintf("[%s] %s\n", $error['property'], $error['message']);
-        }
-        return $retval;
-    }
-
-
-    // ----- Test for the utility methods -----------------------------------
+    // ----- Tests for the utility methods -----------------------------------
 
 
     /** @test

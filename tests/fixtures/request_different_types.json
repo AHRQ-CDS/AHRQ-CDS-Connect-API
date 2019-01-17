@@ -5,7 +5,7 @@
     "status": "Unknown",
     "experimental": true,
     "artifact_type": "Reference Information",
-    "creation_date": "2018-11-01T01:19:50Z",
+    "creation_date": "2018-11-01",
     "creation_and_usage": {
         "license": "GPL",
         "keywords": [ "key1", "key2", "key3" ]

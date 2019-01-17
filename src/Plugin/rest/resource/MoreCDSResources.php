@@ -11,6 +11,7 @@ namespace Drupal\cds_api\Plugin\rest\resource;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Drupal\rest\ModifiedResourceResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
@@ -159,7 +160,7 @@ class MoreCDSResources extends ResourceBase {
           // return the updated artifact as json
           $updated_artifact->load_node($loaded_node);
           $tmp = $updated_artifact->get_as_assoc_array();
-          return new ResourceResponse( $tmp );
+          return new ModifiedResourceResponse( $tmp, 200 );
         } else {
           // @todo this is never reached because it is intercepted first by the Drupal/PHP handler
           throw new CDSNotAuthorizedException( $id );

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: CDS Connect API
-  version: '1.0'
+  version: '1.1'
   description: >-
     An API to allow authenticated users to GET, POST, and PATCH artifacts to the
     CDS Connect repository using a simplified JSON schema. Currently file attachments
@@ -18,13 +18,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/cds_artifact_type'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
     post:
       summary: POST a new artifact to CDS Connect
       description: >-
         Authenticated users can create new artifacts on the CDS Connect repository
         by POSTing valid JSON per the CDS Connect native artifact schema. Users with
         accounts on CDS Connect must first POST their user 'name' and 'pass' to
-        /user/login?_format=json. See documentation for that path above.
+        /user/login?_format=json to receive a login cookie.
       parameters:
         - name: Cookie
           in: header
@@ -41,45 +45,128 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/nativeArtifactFormat'
+              $ref: '#/components/schemas/cds_artifact_type'
       responses:
         '201':
           description: Respond with created artifact.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/nativeArtifactFormat'
+                $ref: '#/components/schemas/cds_artifact_type'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /cds_api/{id}:
+    get:
+      summary: >-
+        Authenticated users can GET the JSON representation of the CDS artifact 
+        with id number {id}. Users with accounts on CDS Connect must first POST 
+        their user 'name' and 'pass' to /user/login?_format=json to receive a login 
+        cookie.
+      parameters:
+        - name: Cookie
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The id of the CDS artifact to return.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: >-
+            Respond with JSON schema representation of the CDS artifact with id 
+            number {id}.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cds_artifact_type'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+    patch:
+      summary: PATCH existing artifact with id {id} on CDS Connect.
+      description: >-
+        Authenticated users can create new artifacts on the CDS Connect repository
+        by POSTing valid JSON per the CDS Connect native artifact schema. Users with
+        accounts on CDS Connect must first POST their user 'name' and 'pass' to
+        /user/login?_format=json to receive a login cookie.
+      parameters:
+        - name: Cookie
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The id of the CDS artifact to update.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cds_artifact_type'
+      responses:
+        '200':
+          description: Respond with updated artifact JSON.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cds_artifact_type'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
 components:
   schemas:
     cds_artifact_type:
+      required:
+        - title
+        - version
+        - status
+        - artifact_type
       properties:
         meta:
-          type:
-            - object
-            - null
+          type: object
           description: Optional properties to describe the CDS artifact; note that it is not possible to specify this for the request portion of POST (since POST is responsible for assigning it), but it is part of the JSON response for POST, GET, and PATCH.
           properties:
             node_id:
               type: integer
               description: Read-only number that is assigned by the repository.  This is needed for referencing an artifact in the REST API.
-              readonly: true
+              readOnly: true
             self:
               type: string
               description: Read-only URI that is assigned by the repository.  This is needed for referencing the artifact in the REST API.
-              readonly: true
+              readOnly: true
         title:
           type: string
           default: CDS Artifact Title
           description: The name of the artifact
         description:
-          type:
-            - string
-            - null
+          type: string
           description: A narrative description of the artifact, in plain language
         identifier:
           type: string
           description: Identifier defined by CDS Connect team for this artifact
-          readonly: true
+          readOnly: true
         version:
           type: string
           default: 0.1
@@ -99,9 +186,9 @@ components:
           enum: [Alert, Data Summary, Event-Condition-Action (ECA) rule, InfoButton, Order Set, Parameter Guidance, Reference Information, Reminder, Report, Risk Assessment, Smart Documentation Form, Warning]
         creation_date:
           type: string
-          format: date-time
-          examples:
-            - 2018-11-01T01:19:50Z
+          format: date
+          example:
+            - 2018-11-01
         creation_and_usage:
           type: object
           properties:
@@ -200,9 +287,7 @@ components:
             source_description:
               type: string
             source:
-              type:
-                - string
-                - null
+              type: array
               items:
                 type: string
                 description: Source title
@@ -224,24 +309,24 @@ components:
           properties:
             approval_date:
               type: string
-              format: date-time
-              examples:
-                - 2018-11-01T01:19:50Z
+              format: date
+              example:
+                - 2018-11-01
             expiration_date:
               type: string
-              format: date-time
-              examples:
-                - 2018-11-01T01:19:50Z
+              format: date
+              example:
+                - 2018-11-01
             last_review_date:
               type: string
-              format: date-time
-              examples:
-                - 2018-11-01T01:19:50Z
+              format: date
+              example:
+                - 2018-11-01
             publication_date:
               type: string
-              format: date-time
-              examples:
-                - 2018-11-01T01:19:50Z
+              format: date
+              example:
+                - 2018-11-01
             preview_image:
               type: string
               description: GET returns path to uploaded file. File upload must be accomplished using JSON API File module.
@@ -250,3 +335,16 @@ components:
           properties:
             pilot_experience:
               type: string
+        coverage_requirements_discovery:
+          type: object
+          description: Fields pertaining to coverage requirements discovery (CRD) for electronic prescribing (eRx) of medication or durable medical equipment (DME).
+          properties:
+            payer:
+              type: string
+              description: The name of the payer for the medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules.
+            code_system: 
+              type: string
+              description: The name of the code system used to reference medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules.
+            erx_code:
+              type: string
+              description: The electronic prescribing (eRx) code representing a specific piece of medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules.
