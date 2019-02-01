@@ -5,299 +5,338 @@
     "type": "object",
     "properties": {
         "meta": {
-            "type": ["object","null"],
-            "description": "Optional properties to describe the CDS artifact; note that it is not possible to specify this for the request portion of POST (since POST is responsible for assigning it), but it is part of the JSON response for POST, GET, and PATCH.",
-            "properties": {
-                "node_id": {
-                    "type": "integer",
-                    "description": "Read-only number that is assigned by the repository.  This is needed for referencing an artifact in the REST API.",
-                    "readonly": true
-                },
-                "self": {
-                    "type": "string",
-                    "description": "Read-only URI that is assigned by the repository.  This is needed for referencing the artifact in the REST API.",
-                    "readonly": true
-                }
+          "type": ["object","null"],
+          "description": "Optional properties to describe the CDS artifact; note that it is not possible to specify this for the request portion of POST (since POST is responsible for assigning it), but it is part of the JSON response for POST, GET, and PATCH.",
+          "properties": {
+            "node_id": {
+              "type": "integer",
+              "description": "Read-only number that is assigned by the repository.  This is needed for referencing an artifact in the REST API.",
+              "readonly": true
+            },
+            "self": {
+              "type": "string",
+              "description": "Read-only URI that is assigned by the repository.  This is needed for referencing the artifact in the REST API.",
+              "readonly": true
             }
+          }
         },
         "title": {
-            "type": "string",
-            "default": "CDS Artifact Title",
-            "description": "The name of the artifact."
+          "type": "string",
+          "default": "CDS Artifact Title",
+          "description": "The name of the artifact."
         },
         "description": {
-            "type": ["string","null"],
-            "description": "A narrative description of the artifact, in plain language."
+          "type": ["string","null"],
+          "description": "A narrative description of the artifact, in plain language."
         },
         "identifier": {
-            "type": "string",
-            "description": "Identifier defined by CDS Connect team for this artifact",
-            "readOnly": true
+          "type": "string",
+          "description": "Identifier defined by CDS Connect team for this artifact.",
+          "readOnly": true
         },
         "version": {
-            "type": "string",
-            "default": "0.1",
-            "description": "Semantic Version Number of the artifact"
+          "type": "string",
+          "default": "0.1",
+          "description": "Semantic Version Number for the artifact (http://semver.org/)."
         },
         "status": {
-            "type": "string",
-            "default": "Active",
-            "description": "The status of the artifact",
-            "enum": [ "Active", "Retired", "Draft","Unknown" ]
+          "type": "string",
+          "default": "Active",
+          "description": "The status of the artifact (see Status Taxonomy for possible values).",
+          "enum": [
+            "Active",
+            "Retired",
+            "Draft",
+            "Unknown"
+          ]
         },
         "experimental": {
-            "type": "boolean",
-            "description": "If true, indicates this artifact is for testing, evaluation, educational or demonstration purposes and not intended for clinical use"
+          "type": "boolean",
+          "description": "Flag indicating whether this artifact is experimental (in early draft state, not yet intended for clinical use)."
         },
         "artifact_type": {
-            "type": "string",
-            "default": "Reference Information",
-            "description": "The type of the artifact",
-            "enum": [ "Alert","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning" ]
+          "type": "string",
+          "default": "Reference Information",
+          "description": "The type of the artifact (see Artifact Type Taxonomy for possible values).",
+          "enum": [
+            "Alert",
+            "Data Summary",
+            "Event-Condition-Action (ECA) rule",
+            "InfoButton",
+            "Order Set",
+            "Parameter Guidance",
+            "Reference Information",
+            "Reminder",
+            "Report",
+            "Risk Assessment",
+            "Smart Documentation Form",
+            "Warning"
+          ]
         },
         "creation_date": {
-            "type": "string",
-            "format": "date",
-            "examples": [
-                "2018-11-01"
-            ]
+          "type": "string",
+          "format": "date",
+          "description": "Date on which the artifact was created.",
+          "examples": [
+            "2018-11-01"
+          ]
         },
         "creation_and_usage": {
-            "type": "object",
-            "properties": {
-                "license": {
-                    "type": "string",
-                    "description": "Taxonomy Term"
-                },
-                "copyrights": {
-                    "type": "string"
-                },
-                "keywords": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Taxonomy Term"
-                    }
-                },
-                "steward": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Node title"
-                    }
-                },
-                "publisher": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Node title"
-                    }
-                },
-                "contributors": {
-                    "type": "string"
-                },
-                "ip_attestation": {
-                    "type": "boolean"
-                }
+          "type": "object",
+          "properties": {
+            "license": {
+              "type": "string",
+              "description": "The license governing the artifact usage (see License Taxonomy for possible values)."
+            },
+            "copyrights": {
+              "type": "string",
+              "description": "Copyright statements associated with this artifact."
+            },
+            "keywords": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "User-defined keywords associated with this artifact."
+              }
+            },
+            "steward": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "The steward / owner of the artifact; should correspond with the name of an Organization entity on CDS Connect."
+              }
+            },
+            "publisher": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "The original publisher of the artifact; should correspond with the name of an Organization entity on CDS Connect."
+              }
+            },
+            "contributors": {
+              "type": "string",
+              "description": "List of individuals or organizations that contributed to the development of the artifact."
+            },
+            "ip_attestation": {
+              "type": "boolean",
+              "description": "Flag indicating that the author asserts that this artifact has been developed in compliance with the IP rights attributed to the source material."
             }
+          }
         },
         "organization": {
-            "type": "object",
-            "properties": {
-                "clinical_domains": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Taxonomy Term"
-                    }
-                },
-                "knowledge_level": {
-                    "type": "string",
-                    "description": "Taxonomy Term"
-                },
-                "related_artifacts": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Node title"
-                    }
-                }
+          "type": "object",
+          "properties": {
+            "clinical_domains": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "The clinical specialties for which the artifact is relevant (see Clinical Domain Taxonomy for possible values). These terms may be used to assist with indexing and searching of artifacts in the repository."
+              }
+            },
+            "knowledge_level": {
+              "type": "string",
+              "description": "The four levels of knowledge representation of a CDS artifact by Boxwala et al (see Knowledge Level Taxonomy for possible values)."
+            },
+            "related_artifacts": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Other artifacts in the CDS repository related to this artifact; should correspond to the names of Artifact entities on CDS Connect."
+              }
             }
+          }
         },
         "artifact_representation": {
-            "type": "object",
-            "properties": {
-                "triggers": {
-                    "type": "string"
-                },
-                "inclusions": {
-                    "type": "string"
-                },
-                "exclusions": {
-                    "type": "string"
-                },
-                "interventions_and_actions": {
-                    "type": "string"
-                },
-                "logic_files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
-                    }
-                }
+          "type": "object",
+          "properties": {
+            "triggers": {
+              "type": "string",
+              "description": "Triggers that should activate the artifact."
+            },
+            "inclusions": {
+              "type": "string",
+              "description": "Lists inclusion criteria to ensure that CDS interventions are applied to only appropriate scenarios evaluated in the patient record."
+            },
+            "exclusions": {
+              "type": "string",
+              "description": "Lists exclusion criteria to ensure that CDS interventions are not applied to individuals that should be excluded or exempt from the recommendation."
+            },
+            "interventions_and_actions": {
+              "type": "string",
+              "description": "Lists the possible interventions and actions taken by CDS to provide information when the conditions specified in a rule are met."
+            },
+            "logic_files": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Attached documents that contain definitions or instances of the logic contained in the artifact. GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
+              }
             }
+          }
         },
         "implementation_details": {
-            "type": "object",
-            "properties": {
-                "engineering_details": {
-                    "type": "string"
-                },
-                "technical_files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Path to uploaded file"
-                    }
-                },
-                "miscellaneous_files": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Path to uploaded file"
-                    }
-                }
+          "type": "object",
+          "properties": {
+            "engineering_details": {
+              "type": "string",
+              "description": "Any technical details an engineer may want to know."
+            },
+            "technical_files": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Any and all technical files associated with the artifact (e.g., CQL code, JSON files, shell scripts, etc.). GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
+              }
+            },
+            "miscellaneous_files": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Any and all miscellaneous files associated with the artifact (e.g., screenshots, workflow diagrams, training materials, etc.). GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
+              }
             }
+          }
         },
         "purpose_and_usage": {
-            "type": "object",
-            "properties": {
-                "purpose": {
-                    "type": "string"
-                },
-                "intended_population": {
-                    "type": "string"
-                },
-                "usage": {
-                    "type": "string"
-                },
-                "cautions": {
-                    "type": "string"
-                },
-                "test_patients": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Path to uploaded file"
-                    }
-                }
+          "type": "object",
+          "properties": {
+            "purpose": {
+              "type": "string",
+              "description": "The purpose of the artifact."
+            },
+            "intended_population": {
+              "type": "string",
+              "description": "The intended population that the artifact applies to."
+            },
+            "usage": {
+              "type": "string",
+              "description": "The context in which the artifact is applicable or should be used."
+            },
+            "cautions": {
+              "type": "string",
+              "description": "Any cautions or warnings to be considered regarding the artifact."
+            },
+            "test_patients": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Sample test (artificial) patients which demonstrate features of the artifact. GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
+              }
             }
+          }
         },
         "supporting_evidence": {
-            "type": "object",
-            "properties": {
-                "source_description": {
-                    "type": "string"
-                },
-                "source": {
-                    "type": ["string","null"],
-                    "description": "Source title"
-                },
-                "references": {
-                    "type": "string"
-                },
-                "artifact_decision_notes": {
-                    "type": "string"
-                },
-                "recommendation_statement": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "decision_notes": {
-                                "type": "string"
-                            },
-                            "quality_of_evidence": {
-                                "type": "string"
-                            },
-                            "recommendation": {
-                                "type": "string"
-                            },
-                            "strength_of_recommendation": {
-                                "type": "string"
-                            }
-                        }
-                    }
+          "type": "object",
+          "properties": {
+            "source_description": {
+              "type": "string",
+              "description": "Description of the relationship between this artifact and the Source."
+            },
+            "source": {
+              "type": ["string","null"],
+              "description": "The primary source used to create the artifact."
+            },
+            "references": {
+              "type": "string",
+              "description": "References to external publications and resources related to the artifact."
+            },
+            "artifact_decision_notes": {
+              "type": "string",
+              "description": "Notes describing the use of the artifact in a pilot project."
+            },
+            "recommendation_statement": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "decision_notes": {
+                    "type": "string",
+                    "description": "Notes describing the decisions and choices that went into the recommendation statement."
+                  },
+                  "quality_of_evidence": {
+                    "type": "string",
+                    "description": "The quality of the artifact’s evidence (e.g., fair, good, poor)."
+                  },
+                  "recommendation": {
+                    "type": "string",
+                    "description": "A summary of clinical recommendations supporting the artifact."
+                  },
+                  "strength_of_recommendation": {
+                    "type": "string",
+                    "description": "The strength of the artifact’s recommendation."
+                  }
                 }
+              }
             }
+          }
         },
         "repository_information": {
-            "type": "object",
-            "properties": {
-                "approval_date": {
-                    "type": "string",
-                    "format": "date",
-                    "examples": [
-                        "2018-11-01"
-                    ]
-
-                },
-                "expiration_date": {
-                    "type": "string",
-                    "format": "date",
-                    "examples": [
-                        "2018-11-01"
-                    ]
-
-                },
-                "last_review_date": {
-                    "type": "string",
-                    "format": "date",
-                    "examples": [
-                        "2018-11-01"
-                    ]
-
-                },
-                "publication_date": {
-                    "type": "string",
-                    "format": "date",
-                    "examples": [
-                        "2018-11-01"
-                    ]
-
-                },
-                "preview_image": {
-                    "type": "string",
-                    "description": "Path to uploaded file"
-                }
+          "type": "object",
+          "properties": {
+            "approval_date": {
+              "type": "string",
+              "description": "The date the artifact was approved for the repository.",
+              "format": "date",
+              "examples": [
+                  "2018-11-01"
+              ]
+            },
+            "expiration_date": {
+              "type": "string",
+              "description": "The date at which artifact no longer effective.",
+              "format": "date",
+              "examples": [
+                  "2018-11-01"
+              ]
+            },
+            "last_review_date": {
+              "type": "string",
+              "description": "The date of last review.",
+              "format": "date",
+              "examples": [
+                  "2018-11-01"
+              ]
+            },
+            "publication_date": {
+              "type": "string",
+              "description": "The date that the artifact was originally published.",
+              "format": "date",
+              "examples": [
+                  "2018-11-01"
+              ]
+            },
+            "preview_image": {
+              "type": "string",
+              "description": "An image to be used as a thumbnail visualization for the artifact. GET returns path to uploaded file. File upload must be accomplished using JSON API File module."
             }
+          }
         },
         "testing_experience": {
-            "type": "object",
-            "properties": {
-                "pilot_experience": {
-                    "type": "string"
-                }
+          "type": "object",
+          "properties": {
+            "pilot_experience": {
+              "type": "string",
+              "description": "Description of how the artifact performed when piloted in a clinical setting (e.g., use, accuracy, impact, lessons learned)."
             }
+          }
         },
         "coverage_requirements_discovery": {
-            "type": "object",
-            "description": "Fields pertaining to coverage requirements discovery (CRD) for electronic prescribing (eRx) of medication or durable medical equipment (DME).",
-            "properties": {
-                "payer" : {
-                    "type": "string",
-                    "description": "The name of the payer for the medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
-                },
-                "code_system": {
-                    "type": "string",
-                    "description": "The name of the code system used to reference medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
-                },
-                "erx_code": {
-                    "type": "string",
-                    "description": "The electronic prescribing (eRx) code representing a specific piece of medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
-                }
+          "type": "object",
+          "description": "Fields pertaining to coverage requirements discovery (CRD) for electronic prescribing (eRx) of medication or durable medical equipment (DME).",
+          "properties": {
+            "payer": {
+              "type": "string",
+              "description": "The name of the payer for the medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
+            },
+            "code_system": {
+              "type": "string",
+              "description": "The name of the code system used to reference medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
+            },
+            "erx_code": {
+              "type": "string",
+              "description": "The electronic prescribing (eRx) code representing a specific piece of medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules."
             }
+          }
         }
-    }
+    }      
 }

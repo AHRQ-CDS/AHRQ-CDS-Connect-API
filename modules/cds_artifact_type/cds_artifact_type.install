@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
  */
 function cds_artifact_type_install() {
   cds_artifact_type_update_8001();
+  cds_artifact_type_update_8002();
 }
 
 /**
@@ -102,18 +103,18 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
     );
     $fieldStorageSaved = $fieldStorage->save();
     if ($fieldStorageSaved) {
-      \Drupal::logger('Artifact Discovery')->info(
+      \Drupal::logger('Artifact Type')->info(
         t("Field @a storage created.",['@a' => $fieldName,])
       );
     }
     else {
-      \Drupal::logger('Artifact Discovery')->error(
+      \Drupal::logger('Artifact Type')->error(
         t("Field @a storage could not be created.",['@a' => $fieldName,])
       );
     }
   }
   else {
-    \Drupal::logger('Artifact Discovery')->info(
+    \Drupal::logger('Artifact Type')->info(
       t("Field @a storage could not be created because the field already exists.",
       ['@a' => $fieldName,])
     );
@@ -134,7 +135,7 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
         'description'  => $config['field']['description'],
       ]
     )->save();
-    \Drupal::logger('Artifact Discovery')->info(
+    \Drupal::logger('Artifact Type')->info(
       t("Field @a created in bundle @b.",
       ['@a' => $fieldName, '@b' => $bundleName])
     );
@@ -157,13 +158,13 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
         'region' => $config['field']['form']['region']
       ]);
     if ($displayForm->save()) {
-      \Drupal::logger('Artifact Discovery')->info(
+      \Drupal::logger('Artifact Type')->info(
         t("Default form settings created for field @a in bundle @b.",
         ['@a' => $fieldName, '@b' => $bundleName])
       );
     }
     else {
-      \Drupal::logger('Artifact Discovery')->error(
+      \Drupal::logger('Artifact Type')->error(
         t("Default form settings could not be set for field @a in bundle @b.",
         ['@a' => $fieldName, '@b' => $bundleName])
       );
@@ -238,13 +239,13 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
         'region' => $config['field']['view']['region']
       ]);
     if ($displayView->save()) {
-      \Drupal::logger('Artifact Discovery')->info(
+      \Drupal::logger('Artifact Type')->info(
         t("Default view settings created for field @a in bundle @b.",
         ['@a' => $fieldName, '@b' => $bundleName])
       );
     }
     else {
-      \Drupal::logger('Artifact Discovery')->error(
+      \Drupal::logger('Artifact Type')->error(
         t("Default view settings could not be set for field @a in bundle @b.",
         ['@a' => $fieldName, '@b' => $bundleName])
       );
@@ -305,8 +306,364 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
 
   }
   else {
-    \Drupal::logger('Artifact Discovery')->info(
+    \Drupal::logger('Artifact Type')->info(
       t("Field @a already exists in bundle @b.",
+        ['@a' => $fieldName, '@b' => $bundleName])
+    );
+  }
+}
+
+/**
+ * Update hook for adding descriptions to all the artifact fields.
+ * 
+ * Does not include the CRD group fields, since those descriptions were added in update_8001.
+ */
+function cds_artifact_type_update_8002() {
+
+  // Associative array of the field names and descriptions.
+  $field_updates = [
+    'field_artifact_type' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The type of the artifact (see Artifact Type Taxonomy for possible values).'
+      ]
+    ],
+    'field_clinical_domain' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The clinical specialties for which the artifact is relevant (see Clinical Domain Taxonomy for possible values). These terms may be used to assist with indexing and searching of artifacts in the repository.'
+      ]
+    ],
+    'field_contributors' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'List of individuals or organizations that contributed to the development of the artifact.'
+      ]
+    ],
+    'field_copyrights' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'Copyright statements associated with this artifact.'
+      ]
+    ],
+    'field_creation_date' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'Date on which the artifact was created.'
+      ]
+    ],
+    'field_description' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'A narrative description of the artifact, in plain language.'
+      ]
+    ],
+    'field_experimental' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'Flag indicating whether this artifact is experimental (in early draft state, not yet intended for clinical use).'
+      ]
+    ],
+    'field_identifier' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'label' => 'Unique Identifier',
+        'description' => 'Identifier defined by the CDS Connect team for the artifact.'
+      ]
+    ],
+    'field_ip_attestation' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'Flag indicating that the author asserts that this artifact has been developed in compliance with the IP rights attributed to the source material.'
+      ]
+    ],
+    'field_keywords' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'User-defined keywords associated with this artifact.'
+      ]
+    ],
+    'field_knowledge_level' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The four levels of knowledge representation of a CDS artifact by Boxwala et al (see Knowledge Level Taxonomy for possible values).'
+      ]
+    ],
+    'field_license' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The license governing the artifact’s usage (see License Taxonomy for possible values).'
+      ]
+    ],
+    'field_publisher' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The original publisher of the artifact.'
+      ]
+    ],
+    'field_related_artifacts' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'Other artifacts in the CDS repository related to this artifact.'
+      ]
+    ],
+    'field_status' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The status of the artifact (see Status Taxonomy for possible values).'
+      ]
+    ],
+    'field_steward' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'The steward / owner of the artifact.'
+      ]
+    ],
+    'field_version' => [
+      'entity_type' => 'node',
+      'bundle_name' => 'artifact',
+      'updates' => [
+        'description' => 'Semantic Version Number for the artifact (http://semver.org/).'
+      ]
+    ],
+    'field_exclusions' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'artifact_representation',
+      'updates' => [
+        'description' => 'Lists exclusion criteria to ensure that CDS interventions are not applied to individuals that should be excluded or exempt from the recommendation.'
+      ]
+    ],
+    'field_inclusions' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'artifact_representation',
+      'updates' => [
+        'description' => 'Lists inclusion criteria to ensure that CDS interventions are applied to only appropriate scenarios evaluated in the patient record.'
+      ]
+    ],
+    'field_interventions_and_actions' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'artifact_representation',
+      'updates' => [
+        'description' => 'Lists the possible interventions and actions taken by CDS to provide information when the conditions specified in a rule are met.'
+      ]
+    ],
+    'field_logic_files' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'artifact_representation',
+      'updates' => [
+        'description' => 'Attached documents that contain definitions or instances of the logic contained in the artifact.'
+      ]
+    ],
+    'field_triggers' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'artifact_representation',
+      'updates' => [
+        'description' => 'Triggers that should activate the artifact.'
+      ]
+    ],
+    'field_engineering_details' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'implementation_details',
+      'updates' => [
+        'description' => 'Any technical details an engineer may want to know.'
+      ]
+    ],
+    'field_miscellaneous_files' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'implementation_details',
+      'updates' => [
+        'description' => 'Any and all miscellaneous files associated with the artifact (e.g., screenshots, workflow diagrams, training materials, etc.).'
+      ]
+    ],
+    'field_technical_files' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'implementation_details',
+      'updates' => [
+        'description' => 'Any and all technical files associated with the artifact (e.g., CQL code, JSON files, shell scripts, etc.).'
+      ]
+    ],
+    'field_cautions' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'purpose_and_usage',
+      'updates' => [
+        'description' => 'Any cautions or warnings to be considered regarding the artifact.'
+      ]
+    ],
+    'field_intended_population' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'purpose_and_usage',
+      'updates' => [
+        'description' => 'The intended population that the artifact applies to.'
+      ]
+    ],
+    'field_purpose' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'purpose_and_usage',
+      'updates' => [
+        'description' => 'The purpose of the artifact.'
+      ]
+    ],
+    'field_test_patients' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'purpose_and_usage',
+      'updates' => [
+        'description' => 'Sample test (artificial) patients which demonstrate features of the artifact.'
+      ]
+    ],
+    'field_usage' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'purpose_and_usage',
+      'updates' => [
+        'description' => 'The context in which the artifact is applicable or should be used.'
+      ]
+    ],
+    'field_approval_date' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'repository_information',
+      'updates' => [
+        'description' => 'The date the artifact was approved for the repository.'
+      ]
+    ],
+    'field_expiration_date' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'repository_information',
+      'updates' => [
+        'description' => 'The date at which artifact no longer effective.'
+      ]
+    ],
+    'field_last_review_date' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'repository_information',
+      'updates' => [
+        'description' => 'The date of last review.'
+      ]
+    ],
+    'field_preview_image' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'repository_information',
+      'updates' => [
+        'description' => 'An image to be used as a thumbnail visualization for the artifact.'
+      ]
+    ],
+    'field_publication_date' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'repository_information',
+      'updates' => [
+        'description' => 'The date that the artifact was originally published.'
+      ]
+    ],
+    'field_artifact_decision_notes' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'supporting_evidence',
+      'updates' => [
+        'description' => 'Notes describing the use of the artifact in a pilot project.'
+      ]
+    ],
+    'field_references' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'supporting_evidence',
+      'updates' => [
+        'description' => 'References to external publications and resources related to the artifact.'
+      ]
+    ],
+    'field_source' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'supporting_evidence',
+      'updates' => [
+        'description' => 'The primary source used to create the artifact.'
+      ]
+    ],
+    'field_source_description' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'supporting_evidence',
+      'updates' => [
+        'description' => 'Description of the relationship between this artifact and the Source.'
+      ]
+    ],
+    'field_decision_notes' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'recommendation_statement',
+      'updates' => [
+        'description' => 'Notes describing the decisions and choices that went into the recommendation statement.'
+      ]
+    ],
+    'field_quality_of_evidence' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'recommendation_statement',
+      'updates' => [
+        'description' => 'The quality of the artifact’s evidence (e.g., fair, good, poor).'
+      ]
+    ],
+    'field_recommendation' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'recommendation_statement',
+      'updates' => [
+        'description' => 'A summary of clinical recommendations supporting the artifact.'
+      ]
+    ],
+    'field_strength_of_recommendation' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'recommendation_statement',
+      'updates' => [
+        'description' => 'The strength of the artifact’s recommendation.'
+      ]
+    ],
+    'field_pilot_experience' => [
+      'entity_type' => 'paragraph',
+      'bundle_name' => 'testing_experience',
+      'updates' => [
+        'description' => 'Description of how the artifact performed when piloted in a clinical setting (e.g., use, accuracy, impact, lessons learned).'
+      ]
+    ]
+  ];
+
+  foreach ($field_updates as $field => $params) {
+    update_artifact_field($field, $params['bundle_name'], $params['entity_type'], $params['updates']);
+  }
+}
+
+/**
+ * Update a field in an entity bundle.
+ */
+function update_artifact_field($fieldName, $bundleName, $entityType, $updates) {
+
+  // Check to make sure $fieldName is already in active configuration.
+  $field = FieldConfig::loadByName($entityType, $bundleName, $fieldName);
+  if (!empty($field)) {
+    // Update the field's label if necessary.
+    if (isset($updates['label'])) {
+      $field->setLabel($updates['label']);
+    }
+    // Update the field's description if necessary.
+    if (isset($updates['description'])) {
+      $field->setDescription($updates['description']);
+    }
+    // Need to save, otherwise these changes won't stick.
+    $field->save();
+    \Drupal::logger('Artifact Type')->info(
+      t("Updated field @a in bundle @b for entity type @c.",
+      ['@a' => $fieldName, '@b' => $bundleName, '@c' => $entityType])
+    );
+  }
+  else {
+    \Drupal::logger('Artifact Type')->info(
+      t("Cannot update field @a in bundle @b; it does not exist.",
         ['@a' => $fieldName, '@b' => $bundleName])
     );
   }
