@@ -1,0 +1,11 @@
+{
+    "name": "ahrq/cds_api",
+    "description": "A RESTful API for interacting with Clinical Decision Support (CDS) artifacts.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/core": "^8.5",
+        "drupal/paragraphs": "^1.1"
+    }
+}
