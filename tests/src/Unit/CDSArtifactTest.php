@@ -232,7 +232,7 @@ class CDSArtifactTest extends TestCase
         $this->assertArraySubset( $artifact->get_value( "publisher" ), ["1"] );
         $this->assertEquals( $artifact->get_value( "contributors" ), "Contributors" );
         $this->assertEquals( $artifact->get_value( "ip_attestation" ), true );
-        $this->assertArraySubset( $artifact->get_value( "clinical_domains" ), ["cd1", "cd2"] );
+        $this->assertArraySubset( $artifact->get_value( "mesh_topics" ), ["Gophers", "Videodisc Recording"] );
         $this->assertEquals( $artifact->get_value( "knowledge_level" ), "1-Narrative" );
         $this->assertArraySubset( $artifact->get_value( "related_artifacts" ), ["2"] );
         $this->assertEquals( $artifact->get_value( "triggers" ), "Triggers" );

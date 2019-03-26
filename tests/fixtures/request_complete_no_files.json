@@ -17,7 +17,7 @@
         "ip_attestation": true
     },
     "organization": {
-        "clinical_domains": ["cd1", "cd2"],
+        "mesh_topics": ["Gophers", "Videodisc Recording"],
         "knowledge_level": "1-Narrative",
         "related_artifacts": ["2"]
     },

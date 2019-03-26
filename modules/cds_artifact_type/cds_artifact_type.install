@@ -4,6 +4,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
 use Psr\Log\LoggerInterface;
+use Drupal\taxonomy\Entity\Vocabulary;
 
 
 /**
@@ -12,6 +13,7 @@ use Psr\Log\LoggerInterface;
 function cds_artifact_type_install() {
   cds_artifact_type_update_8001();
   cds_artifact_type_update_8002();
+  cds_artifact_type_update_8003();
 }
 
 /**
@@ -23,6 +25,13 @@ function cds_artifact_type_update_8001() {
   $fieldName = 'field_code_system';
   $config = [
     'storage' => [
+      'type' => 'string',
+      'cardinality' => 1,
+      'dependencies' => [
+        'module' => [
+          'node'
+        ]
+      ],
       'settings' => [
         'max_length'  => 255,
         'is_ascii'    => FALSE,
@@ -32,13 +41,24 @@ function cds_artifact_type_update_8001() {
     'field' => [
       'label' => 'Code System',
       'description' => 'The name of the code system used to reference medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules.',
+      'settings' => [],
+      'field_type' => 'string',
       'form' => [
         'weight' => 123,
-        'region' => 'content'
+        'region' => 'content',
+        'type' => 'string_textfield',
+        'settings' => [
+          'size' => 60,
+          'placeholder' => ''
+        ],
       ],
       'view' => [
         'weight' => 19,
-        'region' => 'content'
+        'region' => 'content',
+        'type' => 'string',
+        'settings' => [
+          'link_to_entity' => FALSE
+        ],
       ]
     ],
     'group' => [
@@ -50,7 +70,7 @@ function cds_artifact_type_update_8001() {
       'group_view_class' => 'artifact-crd-fields'
     ]
   ];
-  add_artifact_field($fieldName, 'group_erx_crd', 'artifact', $config);
+  add_artifact_field($fieldName, 'group_erx_crd', 'group_erx_crd', 'artifact', $config);
 
   // Add the equipment code field
   $fieldName = 'field_erx_code';
@@ -58,7 +78,7 @@ function cds_artifact_type_update_8001() {
   $config['field']['description'] = 'The electronic prescribing (eRx) code representing a specific piece of medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules.';
   $config['field']['form']['weight'] = 124;
   $config['field']['view']['weight'] = 20;
-  add_artifact_field($fieldName, 'group_erx_crd', 'artifact', $config);
+  add_artifact_field($fieldName, 'group_erx_crd', 'group_erx_crd', 'artifact', $config);
 
   // Add the payer field
   $fieldName = 'field_payer';
@@ -66,7 +86,7 @@ function cds_artifact_type_update_8001() {
   $config['field']['description'] = 'The name of the payer for the medication or durable medical equipment (DME). Only applicable for coverage requirement discovery (CRD) rules.';
   $config['field']['form']['weight'] = 122;
   $config['field']['view']['weight'] = 18;
-  add_artifact_field($fieldName, 'group_erx_crd', 'artifact', $config);
+  add_artifact_field($fieldName, 'group_erx_crd', 'group_erx_crd', 'artifact', $config);
 
   // Create new views
   $config_path = join(DIRECTORY_SEPARATOR, 
@@ -82,7 +102,7 @@ function cds_artifact_type_update_8001() {
 /**
  * Add a field to a node bundle.
  */
-function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
+function add_artifact_field($fieldName, $formGroupName, $viewGroupName, $bundleName, $config) {
 
   // Check to make sure $fieldName does not already have field storage set up.
   if (empty($existingFieldStorage = FieldStorageConfig::loadByName('node', $fieldName))) {
@@ -91,11 +111,12 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
         'field_name'             => $fieldName,
         'langcode'               => 'en',
         'entity_type'            => 'node',
-        'type'                   => 'string',
+        'type'                   => $config['storage']['type'],
         'settings'               => $config['storage']['settings'],
+        'dependencies'           => $config['storage']['dependencies'],
         'module'                 => 'core',
         'locked'                 => FALSE,
-        'cardinality'            => 1,
+        'cardinality'            => $config['storage']['cardinality'],
         'translatable'           => TRUE,
         'persist_with_no_fields' => FALSE,
         'custom_storage'         => FALSE,
@@ -133,6 +154,8 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
         'required'     => FALSE,
         'translatable' => FALSE,
         'description'  => $config['field']['description'],
+        'settings'     => $config['field']['settings'],
+        'field_type'   => $config['field']['field_type']
       ]
     )->save();
     \Drupal::logger('Artifact Type')->info(
@@ -149,12 +172,9 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
       ->getStorage('entity_form_display')
       ->load('node.' . $bundleName . '.default')
       ->setComponent($fieldName, [
-        'type'   => 'string_textfield',
+        'type'   => $config['field']['form']['type'],
         'weight' => $config['field']['form']['weight'],
-        'settings' => [
-          'size' => 60,
-          'placeholder' => ''
-        ],
+        'settings' => $config['field']['form']['settings'],
         'region' => $config['field']['form']['region']
       ]);
     if ($displayForm->save()) {
@@ -170,16 +190,16 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
       );
     }
 
-    /* Add $fieldName to the $groupName field group in the default form display 
+    /* Add $fieldName to the $formGroupName field group in the default form display 
        for the $bundleName bundle. */
     $group_list_settings = $entityTypemanager
       ->getStorage('entity_form_display')
       ->load('node.' . $bundleName . '.default')
       ->getThirdPartySetting('field_group','group_node_edit_form');
-    // First check to see if the $groupName exists.
-    if ( ! in_array( $groupName, $group_list_settings['children'])) {
+    // First check to see if the $formGroupName exists.
+    if ( ! in_array( $formGroupName, $group_list_settings['children'])) {
       // If it does not, add the new group to the master list.
-      $group_list_settings['children'][] = $groupName;
+      $group_list_settings['children'][] = $formGroupName;
       $entityTypemanager
         ->getStorage('entity_form_display')
         ->load('node.' . $bundleName . '.default')
@@ -205,21 +225,20 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
       $entityTypemanager
         ->getStorage('entity_form_display')
         ->load('node.' . $bundleName . '.default')
-        ->setThirdPartySetting('field_group', $groupName, $group_settings)
+        ->setThirdPartySetting('field_group', $formGroupName, $group_settings)
         ->save();
     }
     else {
-      // Otherwise, just add $fieldName to the $groupName field group.
+      // Otherwise, just add $fieldName to the $formGroupName field group.
       $group_settings = $entityTypemanager
         ->getStorage('entity_form_display')
         ->load('node.' . $bundleName . '.default')
-        ->getThirdPartySetting('field_group',$groupName);
+        ->getThirdPartySetting('field_group',$formGroupName);
       $group_settings['children'][] = $fieldName;
-      $group_settings['weight'] = $config['group']['group_form_weight'];
       $entityTypemanager
         ->getStorage('entity_form_display')
         ->load('node.' . $bundleName . '.default')
-        ->setThirdPartySetting('field_group', $groupName, $group_settings)
+        ->setThirdPartySetting('field_group', $formGroupName, $group_settings)
         ->save();
     }
 
@@ -231,11 +250,9 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
       ->setComponent($fieldName, [
         'weight' => $config['field']['view']['weight'],
         'label' => 'above',
-        'settings' => [
-          'link_to_entity' => FALSE
-        ],
+        'settings' => $config['field']['view']['settings'],
         'third_party_settings' => [],
-        'type' => 'string',
+        'type' => $config['field']['view']['type'],
         'region' => $config['field']['view']['region']
       ]);
     if ($displayView->save()) {
@@ -251,13 +268,13 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
       );
     }
 
-    /* Add $fieldName to the $groupName field group in the default view display 
+    /* Add $fieldName to the $viewGroupName field group in the default view display 
        for the $bundleName bundle. */
     $group_list_settings = $entityTypemanager
       ->getStorage('entity_view_display')
       ->load('node.' . $bundleName . '.default')
-      ->getThirdPartySetting('field_group',$groupName);
-    // First check to see if the $groupName exists.
+      ->getThirdPartySetting('field_group',$viewGroupName);
+    // First check to see if the $viewGroupName exists.
     if ( empty($group_list_settings) ) {
       /* If it does not, add the new group to the master list and create the 
          settings for the new group. */
@@ -284,23 +301,20 @@ function add_artifact_field($fieldName, $groupName, $bundleName, $config) {
       $entityTypemanager
         ->getStorage('entity_view_display')
         ->load('node.' . $bundleName . '.default')
-        ->setThirdPartySetting('field_group', $groupName, $group_settings)
+        ->setThirdPartySetting('field_group', $viewGroupName, $group_settings)
         ->save();
     }
     else {
-      // Otherwise, just add $fieldName to the $groupName field group.
+      // Otherwise, just add $fieldName to the $viewGroupName field group.
       $group_settings = $entityTypemanager
         ->getStorage('entity_view_display')
         ->load('node.' . $bundleName . '.default')
-        ->getThirdPartySetting('field_group',$groupName);
+        ->getThirdPartySetting('field_group',$viewGroupName);
       $group_settings['children'][] = $fieldName;
-      $group_settings['weight'] = $config['group']['group_view_weight'];
-      $group_settings['format_settings']['label'] = $config['group']['group_view_label'];
-      $group_settings['label'] = $config['group']['group_view_label'];
       $entityTypemanager
         ->getStorage('entity_view_display')
         ->load('node.' . $bundleName . '.default')
-        ->setThirdPartySetting('field_group', $groupName, $group_settings)
+        ->setThirdPartySetting('field_group', $viewGroupName, $group_settings)
         ->save();
     }
 
@@ -667,4 +681,175 @@ function update_artifact_field($fieldName, $bundleName, $entityType, $updates) {
         ['@a' => $fieldName, '@b' => $bundleName])
     );
   }
+}
+
+/**
+ * Update hook for adding MeSH topic terms to the artifact node bundle. This hook 
+ * also disables the clinical domain field but does not remove it from the bundle.
+ */
+function cds_artifact_type_update_8003() {
+
+  // First ensure that the mesh taxonomy exists.
+  $vocabulary = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_vocabulary')
+    ->load('mesh');
+  // If the MeSH taxonomy does not exist, create it.
+  if (empty($vocabulary)) {
+    Vocabulary::create([
+      'name' => 'mesh',
+      'vid' => 'mesh',
+    ])->save();
+  }
+
+  // Add the MeSH Topics field
+  $fieldName = 'field_mesh_topics';
+  $config = [
+    'storage' => [
+      'type' => 'entity_reference',
+      'cardinality' => -1,
+      'dependencies' => [
+        'module' => [
+          'node',
+          'taxonomy'
+        ]
+      ],
+      'settings' => [
+        'target_type'  => 'taxonomy_term'
+      ],
+    ],
+    'field' => [
+      'label' => 'MeSH Topics',
+      'description' => 'Topic tags derived from the National Library of Medicine\'s 2019 Medical Subject Headings (MeSH) taxonomy',
+      'settings' => [
+        'handler' => 'default:taxonomy_term',
+        'handler_settings' => [
+          'target_bundles' => [
+            'mesh' => 'mesh'
+          ],
+          'sort' => [
+            'field' => 'name',
+            'direction' => 'asc'
+          ],      
+          'auto_create' => FALSE,
+          'auto_create_bundle' => ''
+        ]
+      ],
+      'field_type' => 'entity_reference',
+      'form' => [
+        'weight' => 125,
+        'region' => 'content',
+        'type' => 'entity_reference_autocomplete',
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => 60,
+          'placeholder' => ''
+        ],
+      ],
+      'view' => [
+        'weight' => 16,
+        'region' => 'content',
+        'type' => 'entity_reference_label',
+        'settings' => [
+          'link' => TRUE
+        ],
+      ]
+    ],
+    'group' => []
+  ];
+  add_artifact_field($fieldName, 'group_artifact_organization', 'group_artifact_creation_fields',
+    'artifact', $config);
+
+  // Disable clinical domain field
+  $fieldName = 'field_clinical_domain';
+  disable_artifact_field($fieldName, 'group_artifact_organization', 'group_artifact_creation_fields',
+   'artifact');
+}
+
+/**
+ * Disable a field in a node bundle. This means it will not be visible in either the form display 
+ * or the view display.
+ */
+function disable_artifact_field($fieldName, $formGroupName, $viewGroupName, $bundleName) {
+
+  // Disable the field in the entity_form_display
+  disable_entity_display($fieldName, $formGroupName, $bundleName, 'form');
+
+  // Disable the field in the entity_view_display
+  disable_entity_display($fieldName, $viewGroupName, $bundleName, 'view');
+}
+
+/**
+ * Disable a field in an entity_*_display configuration.
+ */
+function disable_entity_display($fieldName, $groupName, $bundleName, $formOrView) {
+
+  // Get the entity type manager
+  $entityTypemanager = \Drupal::entityTypeManager();
+
+  $config_name = 'entity_' . $formOrView . '_display';
+
+  /* Remove $fieldName from the $groupName field group in the default form/view display 
+  for the $bundleName bundle. */
+  $field_group_settings = $entityTypemanager
+    ->getStorage($config_name)
+    ->load('node.' . $bundleName . '.default')
+    ->getThirdPartySetting('field_group', $groupName);
+
+  // First check to see if the $groupName exists.
+  if ( $field_group_settings == NULL) {
+    // Group does not exist.
+    \Drupal::logger('Artifact Type')->info(
+      t("Field @a could not be removed from group @b, since the group does not exist.",
+      ['@a' => $fieldName, '@b' => $groupName])
+    );
+  } else {
+    // The group exists, so get its settings.
+    $group_settings = $field_group_settings;
+
+    // Check that the field we want to remove is actually there.
+    if (! in_array($fieldName, $group_settings['children'])) {
+      // The field is not there.
+      \Drupal::logger('Artifact Type')->info(
+        t("Field @a could not be removed from entity_form_display group @b, since the field is not in that group.",
+        ['@a' => $fieldName, '@b' => $groupName])
+      );
+    } else {
+      // The field is in the group, so let's remove it.
+      $group_settings['children'] = array_diff($group_settings['children'], [$fieldName]);
+      $entityTypemanager
+        ->getStorage($config_name)
+        ->load('node.' . $bundleName . '.default')
+        ->setThirdPartySetting('field_group', $groupName, $group_settings)
+        ->save();
+
+      \Drupal::logger('Artifact Type')->info(
+        t("Field @a removed from entity_form_display group @b.",
+        ['@a' => $fieldName, '@b' => $groupName])
+      );
+    }
+  }
+
+  // Remove the field entry from the entity form/view content configuration.
+  $entity_content = $entityTypemanager
+    ->getStorage($config_name)
+    ->load('node.' . $bundleName . '.default')
+    ->get('content');
+  unset($entity_content[$fieldName]);
+  $entityTypemanager
+    ->getStorage($config_name)
+    ->load('node.' . $bundleName . '.default')
+    ->set('content', $entity_content)
+    ->save();
+  
+  // Mark the field as hidden in the entity form/view display
+  $hidden = $entityTypemanager
+    ->getStorage($config_name)
+    ->load('node.' . $bundleName . '.default')
+    ->get('hidden');
+  $hidden[] = $fieldName;
+  $entityTypemanager
+    ->getStorage($config_name)
+    ->load('node.' . $bundleName . '.default')
+    ->set('hidden', $hidden)
+    ->save();
 }

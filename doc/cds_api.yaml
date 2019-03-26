@@ -223,11 +223,11 @@ components:
         organization:
           type: object
           properties:
-            clinical_domains:
+            mesh_topics:
               type: array
               items:
                 type: string
-                description: The clinical specialties for which the artifact is relevant (see Clinical Domain Taxonomy for possible values). These terms may be used to assist with indexing and searching of artifacts in the repository.
+                description: Topic tags derived from the National Library of Medicine 2019 Medical Subject Headings (MeSH) taxonomy.
             knowledge_level:
               type: string
               description: The four levels of knowledge representation of a CDS artifact by Boxwala et al (see Knowledge Level Taxonomy for possible values).

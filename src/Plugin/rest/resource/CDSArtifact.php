@@ -54,7 +54,7 @@ class CDSArtifact {
     private $contributors;
     private $ip_attestation;
   // Artifact Organization
-    private $clinical_domains;
+    private $mesh_topics; // taxonomy term
     private $knowledge_level;
     private $related_artifacts;//nodes
   //Representation
@@ -105,7 +105,7 @@ class CDSArtifact {
       'status','artifact_type',
       'keywords','steward','publisher','license',
       'ip_attestation',
-      'clinical_domains','knowledge_level','related_artifacts',
+      'mesh_topics','knowledge_level','related_artifacts',
       'logic_files',
       'technical_files','miscellaneous_files',
       'test_patients',
@@ -263,7 +263,7 @@ class CDSArtifact {
 
     // Fields that potentially reference more than one taxonomy term.
     $this->set_value( 'keywords',  $this->node_get_value( $node, 'field_keywords' ) );
-    $this->set_value( 'clinical_domains',  $this->node_get_value( $node, 'field_clinical_domain' ) );
+    $this->set_value( 'mesh_topics',  $this->node_get_value( $node, 'field_mesh_topics' ) );
 
     // Fields which reference one or more nodes.
     $this->set_value( 'related_artifacts',  $this->node_get_value( $node, 'field_related_artifacts' ) );
@@ -290,11 +290,11 @@ class CDSArtifact {
     // Purpose and usage
     $para = $this->node_get_value( $node, 'field_purpose_and_usage' );
     if (!empty($para)) {
-      $this->set_value( 'cautions', $para['field_cautions'] );
-      $this->set_value( 'intended_population', $para['field_intended_population'] );
-      $this->set_value( 'purpose', $para['field_purpose'] );
-      $this->set_value( 'usage', $para['field_usage'] );
-      $this->set_value( 'test_patients', empty($para['field_test_patients']) ? [""] : array_column(array_column($para['field_test_patients'], 'url'), 'value'));
+      isset($para['field_cautions']) ? $this->set_value( 'cautions', $para['field_cautions'] ) : NULL;
+      isset($para['field_intended_population']) ? $this->set_value( 'intended_population', $para['field_intended_population'] ) : NULL;
+      isset($para['field_purpose']) ? $this->set_value( 'purpose', $para['field_purpose'] ) : NULL;
+      isset($para['field_usage']) ? $this->set_value( 'usage', $para['field_usage'] ) : NULL;
+      isset($para['field_test_patients']) ? $this->set_value( 'test_patients', empty($para['field_test_patients']) ? [""] : array_column(array_column($para['field_test_patients'], 'url'), 'value')) : NULL;
     }
     // Supporting evidence
     $para = $this->node_get_value( $node, 'field_supporting_evidence' );
@@ -304,9 +304,9 @@ class CDSArtifact {
         $this->set_value( 'source', $para['field_source'][0]->title->value );
       }
       $this->set_value( 'references', $para['field_references'] );
-      $this->set_value( 'artifact_decision_notes', $para['field_artifact_decision_notes'] );
+      isset($para['field_artifact_decision_notes']) ? $this->set_value( 'artifact_decision_notes', $para['field_artifact_decision_notes'] ) : NULL;
       // Recommendation statements
-      $rs_para = $para['field_recommendation_statement'];
+      $rs_para = isset($para['field_recommendation_statement']) ? $para['field_recommendation_statement'] : [];
       $recommendation_statement_array = [];
       foreach ($rs_para as $rs) {
         $recommendation_statement_array[] = [
@@ -321,10 +321,10 @@ class CDSArtifact {
     // Repository information
     $para = $this->node_get_value( $node, 'field_repository_information' );
     if (!empty($para)) {
-      $this->set_value( 'approval_date', $para['field_approval_date'] );
-      $this->set_value( 'expiration_date', $para['field_expiration_date'] );
-      $this->set_value( 'last_review_date', $para['field_last_review_date'] );
-      $this->set_value( 'publication_date', $para['field_publication_date'] );
+      isset($para['field_approval_date']) ? $this->set_value( 'approval_date', $para['field_approval_date'] ) : NULL;
+      isset($para['field_expiration_date']) ? $this->set_value( 'expiration_date', $para['field_expiration_date'] ) : NULL;
+      isset($para['field_last_review_date']) ? $this->set_value( 'last_review_date', $para['field_last_review_date'] ) : NULL;
+      isset($para['field_publication_date']) ? $this->set_value( 'publication_date', $para['field_publication_date'] ) : NULL;
     }
     // Testing experience
     $para = $this->node_get_value( $node, 'field_testing_experience' );
@@ -426,9 +426,8 @@ class CDSArtifact {
 
       // For each element, check to see whether it is rich text or not
       //  so that it can set the appropriate level of sanitization
-      if (in_array ($key,$this->non_rich_text_fields)) {
-        $permissive = false;
-      } else if (in_array ($key,$this->rich_text_fields)) {
+      $permissive = false;
+      if (in_array ($key,$this->rich_text_fields)) {
         $permissive = true;
       }
 
@@ -496,7 +495,7 @@ class CDSArtifact {
         'ip_attestation' => $this->ip_attestation
       ],
       'organization' => [
-        'clinical_domains' => $this->clinical_domains,
+        'mesh_topics' => $this->mesh_topics,
         'knowledge_level' => $this->knowledge_level[0],
         'related_artifacts' => $this->related_artifacts
       ],
@@ -599,12 +598,12 @@ class CDSArtifact {
       $keyword_array[] = $this->load_taxonomy_term_by_name('keywords', $kw);
     }
     CDSArtifact::node_set_field($node,'field_keywords', $keyword_array);
-    // Clinical domains
-    $clinical_domain_array = [];
-    foreach((array) $this->clinical_domains as $cd) {
-      $clinical_domain_array[] = $this->load_taxonomy_term_by_name('clinical_domain', $cd);
+    // Topic tags derived from the National Library of Medicine 2019 Medical Subject Headings (MeSH) taxonomy
+    $mesh_topic_array = [];
+    foreach((array) $this->mesh_topics as $cd) {
+      $mesh_topic_array[] = $this->load_taxonomy_term_by_name('mesh', $cd);
     }
-    CDSArtifact::node_set_field($node,'field_clinical_domain', $clinical_domain_array);
+    CDSArtifact::node_set_field($node,'field_mesh_topics', $mesh_topic_array);
 
     // Fields which reference one or more nodes.
     CDSArtifact::node_set_field($node,'field_related_artifacts', $this->load_nodes_by_name($this->related_artifacts));
@@ -666,12 +665,12 @@ class CDSArtifact {
       $keyword_array[] = $this->load_taxonomy_term_by_name('keywords', $kw);
     }
     CDSArtifact::node_set_field($node,'field_keywords', $keyword_array);
-    // Clinical domains
-    $clinical_domain_array = [];
-    foreach((array) $this->clinical_domains as $cd) {
-      $clinical_domain_array[] = $this->load_taxonomy_term_by_name('clinical_domain', $cd);
+    // Topic tags derived from the National Library of Medicine 2019 Medical Subject Headings (MeSH) taxonomy
+    $mesh_topic_array = [];
+    foreach((array) $this->mesh_topics as $cd) {
+      $mesh_topic_array[] = $this->load_taxonomy_term_by_name('mesh', $cd);
     }
-    CDSArtifact::node_set_field($node,'field_clinical_domain', $clinical_domain_array);
+    CDSArtifact::node_set_field($node,'field_mesh_topics', $mesh_topic_array);
 
     // Fields which reference one or more nodes.
     CDSArtifact::node_set_field($node,'field_related_artifacts', $this->load_nodes_by_name($this->related_artifacts));

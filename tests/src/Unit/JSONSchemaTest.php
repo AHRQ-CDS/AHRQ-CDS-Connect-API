@@ -154,7 +154,7 @@ class JSONSchemaTest extends TestCase
                 'experimental' => 'String value found, but a boolean is required',
                 'creation_and_usage.keywords' => 'Object value found, but an array is required',
                 'testing_experience' => 'Array value found, but an object is required',
-                'artifact_type' => 'Does not have a value in the enumeration ["Alert","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning"]',
+                'artifact_type' => 'Does not have a value in the enumeration ["Alert","Calculator","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Multimodal","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning"]',
                 'creation_date' => 'Invalid date "2018-01", expected format YYYY-MM-DD'
             ] );
     }
@@ -251,7 +251,7 @@ class JSONSchemaTest extends TestCase
         $json = CDSUtils::read_json( "request_wrong_enum.json" );
         CDSUtils::assert_json_to_schema( $json,
             [ 'status' => 'Does not have a value in the enumeration ["Active","Retired","Draft","Unknown"]',
-              'artifact_type' => 'Does not have a value in the enumeration ["Alert","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning"]' ],
+              'artifact_type' => 'Does not have a value in the enumeration ["Alert","Calculator","Data Summary","Event-Condition-Action (ECA) rule","InfoButton","Multimodal","Order Set","Parameter Guidance","Reference Information","Reminder","Report","Risk Assessment","Smart Documentation Form","Warning"]' ],
             true );
 
     }
