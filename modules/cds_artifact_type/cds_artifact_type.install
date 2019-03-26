@@ -5,6 +5,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field\Entity\FieldConfig;
 use Psr\Log\LoggerInterface;
 use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\views\Views;
 
 
 /**
@@ -14,6 +15,7 @@ function cds_artifact_type_install() {
   cds_artifact_type_update_8001();
   cds_artifact_type_update_8002();
   cds_artifact_type_update_8003();
+  cds_artifact_type_update_8004();
 }
 
 /**
@@ -852,4 +854,15 @@ function disable_entity_display($fieldName, $groupName, $bundleName, $formOrView
     ->load('node.' . $bundleName . '.default')
     ->set('hidden', $hidden)
     ->save();
+}
+
+/**
+ * Update hook for removing the limit of how many items are returned by the erx_rules 
+ * view, which is a REST endpoint.
+ */
+function cds_artifact_type_update_8004() {
+  $view = Views::getView('erx_rules');
+  $display = &$view->storage->getDisplay('rest_export_1');
+  $display['display_options']['pager']['type'] = 'none';
+  $view->save();
 }
