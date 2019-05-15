@@ -274,18 +274,18 @@ class CDSArtifact {
     // Artifact representation
     $para = $this->node_get_value( $node, 'field_artifact_representation' );
     if (!empty($para)) {
-      $this->set_value( 'exclusions', $para['field_exclusions'] );
-      $this->set_value( 'inclusions', $para['field_inclusions'] );
-      $this->set_value( 'interventions_and_actions', $para['field_interventions_and_actions'] );
-      $this->set_value( 'triggers', $para['field_triggers'] );
-      $this->set_value( 'logic_files', empty($para['field_logic_files']) ? [""] : array_column(array_column($para['field_logic_files'], 'url'), 'value'));
+      isset($para['field_exclusions']) ? $this->set_value( 'exclusions', $para['field_exclusions'] ) : NULL;
+      isset($para['field_inclusions']) ? $this->set_value( 'inclusions', $para['field_inclusions'] ) : NULL;
+      isset($para['field_interventions_and_actions']) ? $this->set_value( 'interventions_and_actions', $para['field_interventions_and_actions'] ) : NULL;
+      isset($para['field_triggers']) ? $this->set_value( 'triggers', $para['field_triggers'] ) : NULL;
+      isset($para['field_logic_files']) ? $this->set_value( 'logic_files', empty($para['field_logic_files']) ? [""] : array_column(array_column($para['field_logic_files'], 'url'), 'value')) : NULL;
     }
     // Implementation details
     $para = $this->node_get_value( $node, 'field_implementation_details' );
     if (!empty($para)) {
-      $this->set_value( 'engineering_details', $para['field_engineering_details'] );
-      $this->set_value( 'technical_files', empty($para['field_technical_files']) ? [""] : array_column(array_column($para['field_technical_files'], 'url'), 'value'));
-      $this->set_value( 'miscellaneous_files', empty($para['field_miscellaneous_files']) ? [""] : array_column(array_column($para['field_miscellaneous_files'], 'url'), 'value'));
+      isset($para['field_engineering_details']) ? $this->set_value( 'engineering_details', $para['field_engineering_details'] ) : NULL;
+      isset($para['field_technical_files']) ? $this->set_value( 'technical_files', empty($para['field_technical_files']) ? [""] : array_column(array_column($para['field_technical_files'], 'url'), 'value')) : NULL;
+      isset($para['field_miscellaneous_files']) ? $this->set_value( 'miscellaneous_files', empty($para['field_miscellaneous_files']) ? [""] : array_column(array_column($para['field_miscellaneous_files'], 'url'), 'value')) : NULL;
     }
     // Purpose and usage
     $para = $this->node_get_value( $node, 'field_purpose_and_usage' );
@@ -299,11 +299,11 @@ class CDSArtifact {
     // Supporting evidence
     $para = $this->node_get_value( $node, 'field_supporting_evidence' );
     if (!empty($para)) {
-      $this->set_value( 'source_description', $para['field_source_description'] );
+      isset($para['field_source_description']) ? $this->set_value( 'source_description', $para['field_source_description'] ) : NULL;
       if(isset($para['field_source'])) {
         $this->set_value( 'source', $para['field_source'][0]->title->value );
       }
-      $this->set_value( 'references', $para['field_references'] );
+      isset($para['field_references']) ? $this->set_value( 'references', $para['field_references'] ) : NULL;
       isset($para['field_artifact_decision_notes']) ? $this->set_value( 'artifact_decision_notes', $para['field_artifact_decision_notes'] ) : NULL;
       // Recommendation statements
       $rs_para = isset($para['field_recommendation_statement']) ? $para['field_recommendation_statement'] : [];

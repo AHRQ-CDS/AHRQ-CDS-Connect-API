@@ -119,8 +119,14 @@ class MoreCDSResources extends ResourceBase {
         $artifact->load_node($loaded_node);
         // convert loaded artifact to json
         $json = $artifact->get_as_assoc_array();
+        // set cacheability metadata
+        $meta = [
+          '#cache' => [
+            'max-age' => 0,
+          ],
+        ];
         // return as a response resource
-        $response = new ResourceResponse($json,200);
+        $response = (new ResourceResponse($json,200))->addCacheableDependency($meta);
         return $response;
       } else {
         throw new CDSUnknownNodeIdException( $id );
