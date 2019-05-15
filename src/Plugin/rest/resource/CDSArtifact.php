@@ -274,18 +274,19 @@ class CDSArtifact {
     // Artifact representation
     $para = $this->node_get_value( $node, 'field_artifact_representation' );
     if (!empty($para)) {
+      // die(var_dump($para['field_logic_files']));
       isset($para['field_exclusions']) ? $this->set_value( 'exclusions', $para['field_exclusions'] ) : NULL;
       isset($para['field_inclusions']) ? $this->set_value( 'inclusions', $para['field_inclusions'] ) : NULL;
       isset($para['field_interventions_and_actions']) ? $this->set_value( 'interventions_and_actions', $para['field_interventions_and_actions'] ) : NULL;
       isset($para['field_triggers']) ? $this->set_value( 'triggers', $para['field_triggers'] ) : NULL;
-      isset($para['field_logic_files']) ? $this->set_value( 'logic_files', empty($para['field_logic_files']) ? [""] : array_column(array_column($para['field_logic_files'], 'url'), 'value')) : NULL;
+      isset($para['field_logic_files']) ? $this->set_value( 'logic_files', empty($para['field_logic_files']) ? [""] : array_map( function($o) {return $o->createFileUrl();} , $para['field_logic_files'])) : NULL;
     }
     // Implementation details
     $para = $this->node_get_value( $node, 'field_implementation_details' );
     if (!empty($para)) {
       isset($para['field_engineering_details']) ? $this->set_value( 'engineering_details', $para['field_engineering_details'] ) : NULL;
-      isset($para['field_technical_files']) ? $this->set_value( 'technical_files', empty($para['field_technical_files']) ? [""] : array_column(array_column($para['field_technical_files'], 'url'), 'value')) : NULL;
-      isset($para['field_miscellaneous_files']) ? $this->set_value( 'miscellaneous_files', empty($para['field_miscellaneous_files']) ? [""] : array_column(array_column($para['field_miscellaneous_files'], 'url'), 'value')) : NULL;
+      isset($para['field_technical_files']) ? $this->set_value( 'technical_files', empty($para['field_technical_files']) ? [""] : array_map( function($o) {return $o->createFileUrl();} , $para['field_technical_files'])) : NULL;
+      isset($para['field_miscellaneous_files']) ? $this->set_value( 'miscellaneous_files', empty($para['field_miscellaneous_files']) ? [""] : array_map( function($o) {return $o->createFileUrl();} , $para['field_miscellaneous_files'])) : NULL;
     }
     // Purpose and usage
     $para = $this->node_get_value( $node, 'field_purpose_and_usage' );
@@ -294,7 +295,7 @@ class CDSArtifact {
       isset($para['field_intended_population']) ? $this->set_value( 'intended_population', $para['field_intended_population'] ) : NULL;
       isset($para['field_purpose']) ? $this->set_value( 'purpose', $para['field_purpose'] ) : NULL;
       isset($para['field_usage']) ? $this->set_value( 'usage', $para['field_usage'] ) : NULL;
-      isset($para['field_test_patients']) ? $this->set_value( 'test_patients', empty($para['field_test_patients']) ? [""] : array_column(array_column($para['field_test_patients'], 'url'), 'value')) : NULL;
+      isset($para['field_test_patients']) ? $this->set_value( 'test_patients', empty($para['field_test_patients']) ? [""] : array_map( function($o) {return $o->createFileUrl();} , $para['field_test_patients'])) : NULL;
     }
     // Supporting evidence
     $para = $this->node_get_value( $node, 'field_supporting_evidence' );
