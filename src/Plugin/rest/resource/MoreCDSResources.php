@@ -160,13 +160,25 @@ class MoreCDSResources extends ResourceBase {
         $user = \Drupal\user\Entity\User::load($this->currentUser->id());
         $check = $loaded_node->access('update', $user);
         if ($check) { // user is allowed to update the artifact
-          $updated_artifact = new CDSArtifact();
-          $updated_artifact->load_json(json_decode(json_encode($decoded_payload)));
-          $updated_artifact->update_node($loaded_node);
-          // return the updated artifact as json
-          $updated_artifact->load_node($loaded_node);
-          $tmp = $updated_artifact->get_as_assoc_array();
-          return new ModifiedResourceResponse( $tmp, 200 );
+
+          $artifact = new CDSArtifact();
+          $artifact->load_node($loaded_node);
+
+          // overlay data from incoming json into pre-existing artifact
+          $artifact->load_json_patch($decoded_payload);
+
+          // copy data from updated/merged
+          $artifact->update_node($loaded_node);
+
+          // load a clean artifact object with data from the drupal node object
+          $clean_artifact = new CDSArtifact();
+          $clean_node = Node::load($id);
+
+          $clean_artifact->load_node($clean_node);
+
+          $clean_artifact_as_assoc_array = $clean_artifact->get_as_assoc_array();
+
+          return new ModifiedResourceResponse( $clean_artifact_as_assoc_array, 200 );
         } else {
           // @todo this is never reached because it is intercepted first by the Drupal/PHP handler
           throw new CDSNotAuthorizedException( $id );

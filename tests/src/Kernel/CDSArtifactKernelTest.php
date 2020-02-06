@@ -69,7 +69,7 @@ class CDSArtifactKernelTest extends EntityKernelTestBase {
     // Setup a simple artifact.
     $json = CDSUtils::read_json("request_minimal.json");
     $this->simple_artifact = new CDSArtifact();
-    $this->simple_artifact->load_json($json);
+    $this->simple_artifact->load_json_post($json);
   }
 
   /** @test

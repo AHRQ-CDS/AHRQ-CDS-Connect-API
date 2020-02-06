@@ -57,7 +57,7 @@ class CDSArtifactTest extends TestCase
     {
         $json = CDSUtils::read_json( "request_minimal.json" );
         $artifact = new CDSArtifact();
-        $artifact->load_json($json);
+        $artifact->load_json_post($json);
         $this->assertEquals( $artifact->get_title(), "title (test 0 + 1 )" );
     }
 
@@ -81,7 +81,7 @@ class CDSArtifactTest extends TestCase
 
         $this->assertEquals( $artifact->get_value( "description" ), null ); // wasn't specified
         $this->assertEquals( $artifact->get_value( "non_existent_key" ), null );
-        $this->assertEquals( $artifact->get_value( "😀" ), null );
+        $this->assertEquals( $artifact->get_value( "?" ), null );
     }
 
 
@@ -208,7 +208,7 @@ class CDSArtifactTest extends TestCase
     public function test_normal_request1()
     {
         $artifact = CDSUtils::setup_artifact( "request_rich_text.json" );
-        $this->assertEquals( $artifact->get_title(), "<em>française</em>😀中文" );
+        $this->assertEquals( $artifact->get_title(), "<em>française</em>?中文" );
         $this->assertEquals( $artifact->get_value( "description" ), 'Please refer to <a href="http://example.com">example site</a>' );
         $this->assertEquals( $artifact->get_value( "copyrights" ), "i++;" );
         $this->assertEquals( $artifact->get_value( "contributors" ), "a++;" );

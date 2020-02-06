@@ -40,8 +40,8 @@ if(!function_exists('t')) {
  * 2. provides a "directory" of standardized exception text for use in the subclasses
  *      as defined in the exception series constants below, so that all exceptions will be consistent from the API
  *
- * @example CDSArtifact::load_json()    Contains a good example of how to throw a CDS-specific exception (i.e., CDSNonconformantJsonException)
- *      complete with tailored error messages.  Basically (from the load_json() example):
+ * @example CDSArtifact::load_json_post()    Contains a good example of how to throw a CDS-specific exception (i.e., CDSNonconformantJsonException)
+ *      complete with tailored error messages.  Basically (from the load_json_post() example):
  *      ```
  *          $error = CDSSchema::get_schema_validation_errors_as_string();
  *          throw new CDSNonconformantJsonException( $error );

@@ -114,7 +114,7 @@ class CDSUtils
     public static function setup_artifact( $filename ) {
         $json = CDSUtils::read_json( $filename );
         $artifact = new CDSArtifact();
-        $artifact->load_json($json);
+        $artifact->load_json_post($json);
         return $artifact;
     }
 

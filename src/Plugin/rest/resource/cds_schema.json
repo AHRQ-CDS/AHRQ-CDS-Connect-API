@@ -152,23 +152,23 @@
           "type": "object",
           "properties": {
             "triggers": {
-              "type": "string",
+              "type": ["string", "null"],
               "description": "Triggers that should activate the artifact."
             },
             "inclusions": {
-              "type": "string",
+              "type": ["string", "null"],
               "description": "Lists inclusion criteria to ensure that CDS interventions are applied to only appropriate scenarios evaluated in the patient record."
             },
             "exclusions": {
-              "type": "string",
+              "type": ["string", "null"],
               "description": "Lists exclusion criteria to ensure that CDS interventions are not applied to individuals that should be excluded or exempt from the recommendation."
             },
             "interventions_and_actions": {
-              "type": "string",
+              "type": ["string", "null"],
               "description": "Lists the possible interventions and actions taken by CDS to provide information when the conditions specified in a rule are met."
             },
             "logic_files": {
-              "type": "array",
+              "type": ["array", "null"],
               "items": {
                 "type": "string",
                 "description": "Attached documents that contain definitions or instances of the logic contained in the artifact. GET returns path to uploaded file. File upload must be accomplished using JSON API File module."

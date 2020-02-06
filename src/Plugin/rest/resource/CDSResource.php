@@ -126,29 +126,15 @@ class CDSResource extends ResourceBase {
       throw new AccessDeniedHttpException("Only authorized users can modify the repository.");
     }
 
-    // this block remains untested; it was here because without it, a JSON document of "{}" did not work,
-    // but that is no longer the case.
-    // "normal" processing is single object, in the else statement
-    // if (is_array($payload)) {
-    //   $created_nodes = [];
-    //   foreach ($payload as $element) {
-    //     try {
-    //       $tmp = new CDSArtifact();
-    //       $tmp->load_json($element);
-    //       $tmp->get_as_node();
-    //       $created_nodes[] = $tmp->get_title();
-    //     } catch (\Exception $e) {
-    //       //if for some reason the node cant be created, we attempt to explain why
-    //       $created_nodes[] = "Failed to create one Node due to Exception: " . $e->getMessage();
-    //     }
-    //   }
-    //   $response = ['nodes_created' => $created_nodes];
-    //   return new ResourceResponse($response);
-    // } //else { // payload is a single artifact
+      // Create a new CDS artifact in memory
       $artifact = new CDSArtifact();
-      $artifact->load_json( $payload );
+
+      // Load the JSON payload into the CDS artifact
+      $artifact->load_json_post( $payload );
+
+      // Save and return a node
       $artifact_node = $artifact->get_as_node();  // @todo node was saved! should really do this separately from a "get" function
-      $artifact->load_node( $artifact_node );
+      $artifact->load_node( $artifact_node ); // do this to ensure $artifact matches what is in the database
       return new ModifiedResourceResponse( $artifact->get_as_assoc_array(), 201 );
     // }
   }

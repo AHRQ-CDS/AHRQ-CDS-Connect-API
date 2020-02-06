@@ -188,7 +188,7 @@ class CDSArtifact {
    *
    * @throws CDSNonconformantJsonException
    */
-  public function load_json( $json, bool $assign_defaults = true ) {
+  public function load_json_post( $json, bool $assign_defaults = true ) {
     // make $json something consistent and manipulatable
     if ( is_string( $json ) ) {
       $json = json_decode( $json );
@@ -226,6 +226,57 @@ class CDSArtifact {
       $this->set_title( $json->name );
     }
   }
+
+  /**
+   * Sets the CDSArtifact object's properties based on a JSON specification that conforms
+   * to the CDS JSON schema
+   *
+   * @param $json the JSON object can be represented as
+   *          a string, an array, or decoded JSON (using PHP's json_decode())
+   *
+   * @param bool $assign_defaults Boolean value that if set to true (default) will assign
+   *      default values as defined by the CDS Schema (in the special case of the title,
+   *      default to "CDS Artifact uploaded by <username> on <timestamp>")
+   *
+   * @throws CDSNonconformantJsonException
+   */
+  public function load_json_patch( $json ) {
+
+    // make $json something consistent and manipulatable
+    if ( is_string( $json ) ) {
+      $json = json_decode( $json );
+    }
+    if ( !is_array( $json ) ) {
+      $json = (array) $json;
+    }
+    $json = json_decode( json_encode( $json ) );
+
+    // Validate patched json
+    $validator = CDSSchema::validate_json( $json, false );
+    if ( !$validator->isValid() ) {
+      $error = CDSSchema::get_schema_validation_errors_as_string( $validator );
+      throw new CDSNonconformantJsonException( $error );
+    }
+
+    // Sanitize input.
+    foreach ($json as $key=>$value) {
+      if (in_array($key, $this->rich_text_fields)) { // rich text fields
+        $this->$key = CDSSchema::sanitize_string( $value, true );
+      } elseif (in_array($key, $this->non_rich_text_fields)) { // UTF8 text fields
+        $this->$key = CDSSchema::sanitize_string( $value );
+      } elseif (in_array($key, $this->embedding_objects)) {
+        $this->get_embedded_object($value); // embedding objects need to be unpacked
+      }
+    }
+
+    // Validate and assign title.
+    if ( isset($json->title) ) {
+      $this->set_title( $json->title );
+    } elseif ( isset($json->name) ) {
+      $this->set_title( $json->name );
+    }
+  }
+
 
   /**
    * Sets the CDSArtifact object's properties based on Drupal 8's node object (from database)
@@ -482,12 +533,12 @@ class CDSArtifact {
       'description' => $this->description,
       'identifier' => $this->identifier,
       'version' => $this->version,
-      'status' => $this->status[0],
+      'status' => is_array($this->status) ? $this->status[0] : $this->status,
       'experimental' => $this->experimental,
-      'artifact_type' => $this->artifact_type[0],
+      'artifact_type' => is_array($this->artifact_type) ? $this->artifact_type[0] : $this->artifact_type,
       'creation_date' => $this->creation_date,
       'creation_and_usage' => [
-        'license' => $this->license[0],
+        'license' => is_array($this->license) ? $this->license[0] : $this->license,
         'copyrights' => $this->copyrights,
         'keywords' => $this->keywords,
         'steward' => $this->steward,
@@ -497,7 +548,7 @@ class CDSArtifact {
       ],
       'organization' => [
         'mesh_topics' => $this->mesh_topics,
-        'knowledge_level' => $this->knowledge_level[0],
+        'knowledge_level' => is_array($this->knowledge_level) ? $this->knowledge_level[0] : $this->knowledge_level,
         'related_artifacts' => $this->related_artifacts
       ],
       'artifact_representation' => [
@@ -581,16 +632,16 @@ class CDSArtifact {
     // Fields which reference at most one taxonomy term.
     // Status
     CDSArtifact::node_set_field($node,'field_status', $this->load_taxonomy_term_by_name(
-      'status', $this->status));
+      'status', is_array($this->status) ? $this->status[0] : $this->status));
     // Artifact type
     CDSArtifact::node_set_field($node,'field_artifact_type', $this->load_taxonomy_term_by_name(
-      'artifact_type', $this->artifact_type));
+      'artifact_type', is_array($this->artifact_type) ? $this->artifact_type[0] : $this->artifact_type));
     // License
     CDSArtifact::node_set_field($node,'field_license', $this->load_taxonomy_term_by_name(
-      'license', $this->license));
+      'license', is_array($this->license) ? $this->license[0] : $this->license));
     // Knowledge level
     CDSArtifact::node_set_field($node,'field_knowledge_level', $this->load_taxonomy_term_by_name(
-      'knowledge_level', $this->knowledge_level));
+      'knowledge_level', is_array($this->knowledge_level) ? $this->knowledge_level[0] : $this->knowledge_level));
 
     // Fields that potentially reference more than one taxonomy term.
     // Keywords
@@ -632,7 +683,9 @@ class CDSArtifact {
   public function update_node($node) {
 
     // Fields with simple values (e.g., string).
-    CDSArtifact::node_set_field($node,'title', $this->title);
+    if (!is_null($this->title)) {
+      CDSArtifact::node_set_field($node,'title', $this->title);
+    }
     CDSArtifact::node_set_field($node,'field_description',$this->description);
     CDSArtifact::node_set_field($node,'field_identifier',$this->identifier);
     CDSArtifact::node_set_field($node,'field_version', $this->version);
@@ -648,16 +701,16 @@ class CDSArtifact {
     // Fields which reference at most one taxonomy term.
     // Status
     CDSArtifact::node_set_field($node,'field_status', $this->load_taxonomy_term_by_name(
-      'status', $this->status));
+      'status', is_array($this->status) ? $this->status[0] : $this->status));
     // Artifact type
     CDSArtifact::node_set_field($node,'field_artifact_type', $this->load_taxonomy_term_by_name(
-      'artifact_type', $this->artifact_type));
+      'artifact_type', is_array($this->artifact_type) ? $this->artifact_type[0] : $this->artifact_type));
     // License
     CDSArtifact::node_set_field($node,'field_license', $this->load_taxonomy_term_by_name(
-      'license', $this->license));
+      'license', is_array($this->license) ? $this->license[0] : $this->license));
     // Knowledge level
     CDSArtifact::node_set_field($node,'field_knowledge_level', $this->load_taxonomy_term_by_name(
-      'knowledge_level', $this->knowledge_level));
+      'knowledge_level', is_array($this->knowledge_level) ? $this->knowledge_level[0] : $this->knowledge_level));
 
     // Fields that potentially reference more than one taxonomy term.
     // Keywords
@@ -1058,9 +1111,14 @@ class CDSArtifact {
                'quality_of_evidence',
                'decision_notes'];
 
+    if (is_array($rs)) {
+      $rs = (object)$rs;
+    }
+
     $para = Paragraph::create(['type' => $type]);
     foreach($fields as $field) {
       $para->set('field_' . $field, $rs->$field);
+      //$para->set('field_' . $field, $rs[$field]);
     }
     $para->save();
     return $para;

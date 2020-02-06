@@ -44,9 +44,12 @@ class CDSSchema
      *
      * @return the sanitized string
      */
-    public static function sanitize_string($string, bool $permissive = false) : string
+    public static function sanitize_string($string, bool $permissive = false) : ?string
     {
-        if ($string === null || $string === "") {
+        if ($string === null) {
+          return null;
+        }
+        elseif ($string === "") {
             return "";
         } else {
             if ($permissive) {
