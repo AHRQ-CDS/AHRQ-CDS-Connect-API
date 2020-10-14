@@ -24,16 +24,16 @@ This custom module, located in the `modules/cds_artifact_type` directory. If des
 
 [Permissions](https://api.drupal.org/api/drupal/core%21core.api.php/group/user_api/8.5.x) in Drupal are based upon user roles (_e.g._ administrator). After installation of the CDS Connect API module, a set of permissions will be exposed in the Drupal administrator user interface (UI) for each of the REST resources defined by the module. This allows system level access checks to be put into place for each of the REST resources. As a secondary level of access control, the CDS Connect API also makes user permission checks prior to sharing, creating, or modifying `artifact` content.
 
-An overview of authentication with Drupal is given [here](https://www.drupal.org/docs/8/modules/json-api/what-json-api-doesnt-do). In summary, users POST to `/user/login?_format=json` to login, and POST to `/user/logout?_format=json` to logout. Upon successful authentication, the response to the login POST returns a cross-site request forgery (CSRF) token. This token must be included in all following requests.
+An overview of authentication with Drupal is given [here](https://www.drupal.org/docs/8/modules/json-api/what-json-api-doesnt-do). In summary, users POST to `/cds/login?_format=json` to login, and POST to `/user/logout?_format=json` to logout. Upon successful authentication, the response to the login POST returns a cross-site request forgery (CSRF) token. This token must be included in all following requests.
 
 Login and logout requests using [curl](https://curl.haxx.se/) would appear as follows:
 
 ```
-curl https://cds.ahrq.gov/user/login?_format=json --header "Content-Type:application/json" --request POST --data "{"name":"USERNAME","pass":"USERPASSWORD"}" -c cookie.txt
+curl --header "Content-type: application/json" --request POST --data '{"name":"MYUSERNAME","pass":"MYPASSWORD"}' https://cds.ahrq.gov/cds/login\?_format\=json -c cookie.txt
 ```
 
 ```
-curl https://cds.ahrq.gov/user/logout?_format=json --header "Content-Type:application/json" --header "X-CSRF-Token:THETOKEN" -b cookie.txt
+curl --header "Content-type: application/json" --header "X-CSRF-Token:MYCSRFTOKEN" https://cds.ahrq.gov/user/logout\?_format\=json -b cookie.txt
 ```
 
 ## Functionality
